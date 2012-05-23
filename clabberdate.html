@@ -3,13 +3,12 @@
 </head>
 
 <body>
-	foo
-  {{> hello}}
+  {{> calendar}}
 </body>
 
-<template name="hello">
+<template name="calendar">
   <h1>Hello World!</h1>
-  {{#each calendars}}
+  {{#each dates}}
 	<input type="button" value="Click" />
   {{/each}}
 </template>
