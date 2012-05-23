@@ -1,23 +1,7 @@
-// Calendars = new Meteor.Collection("calendars")
-
 Meteor.autosubscribe(function() {
 	Meteor.subscribe("calendars");
+	Meteor.subscribe("users");
 });
-
-var stub_data = function() {
-	Calendars.insert({
-		description: "Calendar 1",
-		users: [],
-		dates: [],
-		comments: [],
-	});
-};
-stub_data();
-
-// User ID
-var uid = function() {
-	return amplify.storage("user_id");
-};
 
 // Calendar ID
 var cid = function() {
@@ -25,26 +9,27 @@ var cid = function() {
 };
 
 var update_player = function() {
-	var user_id = uid();
+	var user_id = Session.get("user_id");
 
 	if(!user_id) {
 		user_id = Users.insert({name: "Andrew Scala"});
+		Session.set("user_id");
 	}
 };
 
 Template.calendar.dates = function() {
-	return ["a", "b", "c"];
+	return Calendars.find();
 };
 
-// var Router = Backbone.Router.extend({
-	// routes: {
-		// "": "index",
-		// "calendar/:calendar_id": "calendar",
-	// },
+var Router = Backbone.Router.extend({
+	routes: {
+		"": "index",
+		"calendar/:calendar_id": "calendar",
+	},
 
-	// calendar: function(calendar_id) {
-		// alert("calendar_id");
-	// },
-// });
+	calendar: function(calendar_id) {
+		alert(calendar_id);
+	},
+});
 // Backbone.history.start({pushState: true});
 

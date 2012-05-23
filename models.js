@@ -19,3 +19,12 @@ Comments = new Meteor.Collection("comments")
 Users = new Meteor.Collection("users")
 // { name: "John" }
 
+var stub_data = function() {
+	Calendars.insert({
+		description: "Calendar 1",
+		users: [],
+		dates: [],
+		comments: [],
+	});
+};
+// stub_data();
