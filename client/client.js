@@ -9,26 +9,9 @@ Meteor.startup(function() {
 	});
 });
 
-Template.calendar.description = function() {
-	console.log(Session.get("calendar_id"));
+Template.calendarview.calendar = function() {
 	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
-	if(calendar)
-		return calendar.description;
-	else
-		return "Foobar";
-	// return Session.get("calendar_id");
-	// return Calendars.find();
+	console.log(calendar);
+	return calendar;
 };
-
-// var Router = Backbone.Router.extend({
-	// routes: {
-		// "": "index",
-		// "calendar/:calendar_id": "calendar",
-	// },
-
-	// calendar: function(calendar_id) {
-		// alert(calendar_id);
-	// },
-// });
-// // Backbone.history.start({pushState: true});
 
