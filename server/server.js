@@ -1,7 +1,7 @@
 Meteor.startup(function() {
 
 	Meteor.publish("calendars", function() {
-		return Calendars.find();
+		return Calendars.find({});
 	});
 
 	Meteor.publish("dates", function(calendar_id) {
