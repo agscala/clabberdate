@@ -6,13 +6,14 @@ Calendars = new Meteor.Collection("calendars");
 //   comments: [comment_id] }
 
 Dates = new Meteor.Collection("dates");
-// { date: Date() }
+// { date: Date(),
+//   enabled: true/false }
 
-DateInputs = new Meteor.Collection("date_inputs");
+DateResponses = new Meteor.Collection("date_responses");
 // { date_id: N,
 //   calendar_id: N,
 //   user_id: N,
-//   state: ("positive"|"neutral") }
+//   state: ("positive"|"negative") }
 
 Comments = new Meteor.Collection("comments");
 // { user_id: N,

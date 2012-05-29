@@ -3,14 +3,25 @@
 </head>
 
 <body>
-  {{> calendarview }}
+  {{> calendar }}
 </body>
 
-<template name="calendarview">
-	{{#if calendar }}
-		{{#with calendar }}
-			{{ description }}
-		{{/with}}
-	{{/if}}
+<template name="calendar">
+	{{# if calendar }}
+	{{# with calendar }}
+		{{ description }}
+	{{/ with }}
+	{{/ if }}
+	<br/>
+
+	{{# each dates }}
+		{{> date }}
+	{{/ each }}
+</template>
+
+<template name="date">
+	<div class="date">
+		{{ _id }}
+	</div>
 </template>
 
