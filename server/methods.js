@@ -16,8 +16,20 @@ var date_range = function(date_start, date_end) {
 
 Meteor.startup(function() {
 	Meteor.methods({
+		create_user: function(username) {
+			console.log("CREATE USER: " + username);
+			var user_id = Users.insert({name: username});
+			console.log(user_id);
+			return user_id;
+		},
+
+		get_username: function(user_id) {
+			var user = Users.findOne({_id: user_id});
+			return user.name;
+		},
+
 		create_calendar: function(description, date_start, date_end) {
-			console.log("CREATE CALENDAR");
+			// console.log("CREATE CALENDAR");
 			// Check for existing calendar
 			var calendar = Calendars.findOne({description: description});
 			if(calendar)

@@ -4,14 +4,30 @@ Meteor.startup(function() {
 		Meteor.subscribe("dates", Session.get("calendar_id"));
 	});
 
-	Session.set("user_id", 0);
+	Session.set("user_id", amplify.store("user_id"));
 });
+
+var refresh_user = function() {
+	var user_id = amplify.store("user_id");
+	if(user_id) {
+		Session.set("user_id", user_id);
+
+		Meteor.call("get_username", user_id, function(error, username) {
+			Session.set("username", username);
+		});
+	}
+	else {
+		Session.set("user_id", undefined);
+		Session.set("username", undefined);
+	}
+};
 
 Template.calendar.calendar = function() {
 	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
 	// console.log(calendar);
 	return calendar;
 };
+
 
 Template.calendar.dates = function() {
 	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
@@ -22,6 +38,12 @@ Template.calendar.dates = function() {
 	}
 
 	return dates;
+};
+
+Template.date.is_positive_response = function(response) {
+	if(response.state == "positive")
+		return true;
+	else return false;
 };
 
 Template.date.format_date = function(date) {
@@ -56,6 +78,10 @@ Template.date.events = {
 	},
 };
 
+Template.user_prompt.user_id = function() {
+	return Session.get("user_id");
+}
+
 Template.user_prompt.username = function() {
 	var username = amplify.store("username");
 	if(!username) {
@@ -67,8 +93,13 @@ Template.user_prompt.username = function() {
 Template.user_prompt.events = {
 	"click #save-username": function() {
 		var username = $("#choose-username").val();
-		alert(username);
-		amplify.store("username", username);
+
+		Meteor.call("create_user", username, function(error, user_id) {
+			amplify.store("user_id", user_id);
+			amplify.store("username", username);
+			Session.set("user_id", user_id);
+			Session.set("username", username);
+		});
 	},
 }
 
