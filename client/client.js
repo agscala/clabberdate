@@ -4,14 +4,6 @@ Meteor.startup(function() {
 		Meteor.subscribe("dates", Session.get("calendar_id"));
 	});
 
-	var start = moment("May 15, 2012");
-	var end = moment("June 15, 2012");
-
-	Meteor.call("create_calendar", "Calendar Name!", start, end, function(error, calendar_id) {
-		Session.set("calendar_id", calendar_id);
-		// console.log(Session.get("calendar_id"));
-	});
-
 	Session.set("user_id", 0);
 });
 

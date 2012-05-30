@@ -17,6 +17,7 @@ var date_range = function(date_start, date_end) {
 Meteor.startup(function() {
 	Meteor.methods({
 		create_calendar: function(description, date_start, date_end) {
+			console.log("CREATE CALENDAR");
 			// Check for existing calendar
 			var calendar = Calendars.findOne({description: description});
 			if(calendar)
