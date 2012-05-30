@@ -11,6 +11,8 @@ Meteor.startup(function() {
 		Session.set("calendar_id", calendar_id);
 		// console.log(Session.get("calendar_id"));
 	});
+
+	Session.set("user_id", 0);
 });
 
 Template.calendar.calendar = function() {
@@ -27,7 +29,39 @@ Template.calendar.dates = function() {
 		dates = Dates.find({_id: {$in: calendar.dates}});
 	}
 
-	// console.log(dates);
+	console.log(dates);
 	return dates;
+};
+
+Template.date.format_date = function(date) {
+	var date = moment(date._d);
+	return date.format("LL");
+};
+
+Template.date.positive_count = function(responses) {
+	var count = 0;
+	_.each(responses, function(response) {
+		if(response.state == "positive")
+			count += 1;
+	});
+	return count;
+};
+
+Template.date.negative_count = function(responses) {
+	var count = 0;
+	_.each(responses, function(response) {
+		if(response.state == "negative")
+			count += 1;
+	});
+	return count;
+};
+
+Template.date.events = {
+	"click .set_positive": function() {
+		Meteor.call("set_date_positive", this._id, Session.get("user_id"));
+	},
+	"click .set_negative": function() {
+		Meteor.call("set_date_negative", this._id, Session.get("user_id"));
+	},
 };
 

@@ -1,4 +1,5 @@
 Meteor.startup(function() {
+	clear_data();
 
 	Meteor.publish("calendars", function() {
 		return Calendars.find({});
@@ -13,3 +14,7 @@ Meteor.startup(function() {
 	});
 });
 
+function clear_data() {
+	Calendars.remove({});
+	Dates.remove({});
+}
