@@ -3,13 +3,20 @@
 </head>
 
 <body>
+  {{> user_prompt }}
+  <hr/>
   {{> calendar }}
 </body>
+
+<template name="user_prompt">
+	<input type="text" id="choose-username" value="{{ username }}" />
+	<input type="submit" id="save-username" value="Save" />
+</template>
 
 <template name="calendar">
 	{{# if calendar }}
 	{{# with calendar }}
-		{{ description }}
+		{{ description }} - {{ _id }}
 	{{/ with }}
 	{{/ if }}
 	<br/>
@@ -21,9 +28,9 @@
 
 <template name="date">
 	<div class="date">
-		{{ format_date date }}
+		{{ format_date date }} - {{ _id }}
 	</div>
-	<input class="set_positive" type="button" value="Good Date ({{ positive_count responses }})"/>
-	<input class="set_negative" type="button" value="Bad Date ({{ negative_count responses }})"/>
+	<input class="set-positive" type="button" value="Good Date ({{ positive_count responses }})"/>
+	<input class="set-negative" type="button" value="Bad Date ({{ negative_count responses }})"/>
 </template>
 

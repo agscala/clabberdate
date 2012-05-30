@@ -26,10 +26,9 @@ Template.calendar.dates = function() {
 	var dates = [];
 	if(calendar)
 	{
-		dates = Dates.find({_id: {$in: calendar.dates}});
+		dates = Dates.find({_id: {$in: calendar.dates}}, {sort: {date: 1}});
 	}
 
-	console.log(dates);
 	return dates;
 };
 
@@ -57,11 +56,27 @@ Template.date.negative_count = function(responses) {
 };
 
 Template.date.events = {
-	"click .set_positive": function() {
+	"click .set-positive": function() {
 		Meteor.call("set_date_positive", this._id, Session.get("user_id"));
 	},
-	"click .set_negative": function() {
+	"click .set-negative": function() {
 		Meteor.call("set_date_negative", this._id, Session.get("user_id"));
 	},
 };
+
+Template.user_prompt.username = function() {
+	var username = amplify.store("username");
+	if(!username) {
+		username = "non";
+	}
+	return username;
+}
+
+Template.user_prompt.events = {
+	"click #save-username": function() {
+		var username = $("#choose-username").val();
+		alert(username);
+		amplify.store("username", username);
+	},
+}
 
