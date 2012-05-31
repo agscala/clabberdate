@@ -23,6 +23,17 @@ Meteor.startup(function() {
 			return user_id;
 		},
 
+		rename_user: function(user_id, username) {
+			var user = Users.findOne({_id: user_id});
+			if(!user) {
+				user_id = Users.insert({name: username});
+			}
+			else {
+				Users.update({_id: user_id}, {$set: {name: username}});
+			}
+			return user_id;
+		},
+
 		get_username: function(user_id) {
 			var user = Users.findOne({_id: user_id});
 			return user.name;
@@ -42,7 +53,6 @@ Meteor.startup(function() {
 				var date_id = Dates.insert({
 					date: date,
 					enabled: false,
-					responses: [],
 				});
 
 				(function(id) {
@@ -61,19 +71,21 @@ Meteor.startup(function() {
 		},
 
 		set_date_positive: function(date_id, user_id) {
-			var response = {
+			console.log("POS");
+			DateResponses.insert({
+				date_id: date_id,
 				user_id: user_id,
 				state: "positive",
-			};
-			Dates.update({_id: date_id}, {$push: {responses: response}})
+			});
 		},
 
 		set_date_negative: function(date_id, user_id) {
-			var response = {
+			console.log("NEG");
+			DateResponses.insert({
+				date_id: date_id,
 				user_id: user_id,
 				state: "negative",
-			};
-			Dates.update({_id: date_id}, {$push: {responses: response}})
+			});
 		},
 	});
 });

@@ -1,5 +1,5 @@
 Meteor.startup(function() {
-	// clear_data();
+	clear_data();
 
 	Meteor.publish("calendars", function() {
 		return Calendars.find({});
@@ -9,12 +9,14 @@ Meteor.startup(function() {
 		return Dates.find({});
 	});
 
-	Meteor.publish("date_inputs", function(date_id) {
-		return DateInputs.find({date_id: date_id});
+	Meteor.publish("date_responses", function(date_id) {
+		return DateResponses.find({});
 	});
 });
 
 function clear_data() {
 	Calendars.remove({});
 	Dates.remove({});
+	DateResponses.remove({});
 }
+

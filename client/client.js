@@ -2,6 +2,7 @@ Meteor.startup(function() {
 	Meteor.autosubscribe(function() {
 		Meteor.subscribe("calendars");
 		Meteor.subscribe("dates", Session.get("calendar_id"));
+		Meteor.subscribe("date_responses");
 	});
 
 	Session.set("user_id", amplify.store("user_id"));
@@ -31,13 +32,12 @@ Template.calendar.calendar = function() {
 
 Template.calendar.dates = function() {
 	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
-	var dates = [];
+
 	if(calendar)
 	{
-		dates = Dates.find({_id: {$in: calendar.dates}}, {sort: {date: 1}});
+		return Dates.find({_id: {$in: calendar.dates}});
 	}
-
-	return dates;
+	else return [];
 };
 
 Template.date.is_positive_response = function(response) {
@@ -51,22 +51,13 @@ Template.date.format_date = function(date) {
 	return date.format("LL");
 };
 
-Template.date.positive_count = function(responses) {
-	var count = 0;
-	_.each(responses, function(response) {
-		if(response.state == "positive")
-			count += 1;
-	});
-	return count;
+Template.date.positive_count = function(date_id) {
+	console.log(date_id);
+	return DateResponses.find({date_id: date_id, state: "positive"}).count();
 };
 
-Template.date.negative_count = function(responses) {
-	var count = 0;
-	_.each(responses, function(response) {
-		if(response.state == "negative")
-			count += 1;
-	});
-	return count;
+Template.date.negative_count = function(date_id) {
+	return DateResponses.find({date_id: date_id, state: "negative"}).count();
 };
 
 Template.date.events = {
@@ -93,13 +84,21 @@ Template.user_prompt.username = function() {
 Template.user_prompt.events = {
 	"click #save-username": function() {
 		var username = $("#choose-username").val();
+		amplify.store("username", username);
+		Session.set("username", username);
 
-		Meteor.call("create_user", username, function(error, user_id) {
-			amplify.store("user_id", user_id);
-			amplify.store("username", username);
-			Session.set("user_id", user_id);
-			Session.set("username", username);
-		});
+		if(Session.get("user_id")) {
+			Meteor.call("rename_user", Session.get("user_id"), username, function(error, user_id) {
+				amplify.store("user_id", user_id);
+				Session.set("user_id", user_id);
+			});
+		}
+		else {
+			Meteor.call("create_user", username, function(error, user_id) {
+				amplify.store("user_id", user_id);
+				Session.set("user_id", user_id);
+			});
+		}
 	},
 }
 
