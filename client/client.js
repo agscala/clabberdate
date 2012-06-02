@@ -3,6 +3,7 @@ Meteor.startup(function() {
 		Meteor.subscribe("calendars");
 		Meteor.subscribe("dates", Session.get("calendar_id"));
 		Meteor.subscribe("date_responses");
+		Meteor.subscribe("users");
 	});
 
 	Session.set("user_id", amplify.store("user_id"));
@@ -58,6 +59,14 @@ Template.date.positive_count = function(date_id) {
 
 Template.date.negative_count = function(date_id) {
 	return DateResponses.find({date_id: date_id, state: "negative"}).count();
+};
+
+Template.date.responses = function(date_id) {
+	return DateResponses.find({date_id: date_id});
+};
+
+Template.date.username = function(user_id) {
+	return Users.findOne({_id: user_id}).name;
 };
 
 Template.date.events = {

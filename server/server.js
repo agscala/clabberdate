@@ -10,6 +10,10 @@ Meteor.startup(function() {
 	Meteor.publish("date_responses", function(date_id) {
 		return DateResponses.find({});
 	});
+
+	Meteor.publish("users", function() {
+		return Users.find({});
+	});
 });
 
 function clear_data() {

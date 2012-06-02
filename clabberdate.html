@@ -30,6 +30,9 @@
 <template name="date">
 	<div class="date">
 		{{ format_date date }} - {{ _id }}
+		{{# each responses _id }}
+			{{ username user_id }}
+		{{/ each }}
 	</div>
 	<input class="set-positive" type="button" value="Good Date ({{ positive_count _id }})"/>
 	<input class="set-negative" type="button" value="Bad Date ({{ negative_count _id }})"/>
