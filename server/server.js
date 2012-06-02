@@ -1,6 +1,4 @@
 Meteor.startup(function() {
-	clear_data();
-
 	Meteor.publish("calendars", function() {
 		return Calendars.find({});
 	});

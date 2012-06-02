@@ -71,21 +71,33 @@ Meteor.startup(function() {
 		},
 
 		set_date_positive: function(date_id, user_id) {
-			console.log("POS");
-			DateResponses.insert({
-				date_id: date_id,
-				user_id: user_id,
-				state: "positive",
-			});
+			if(DateResponses.find({date_id: date_id, user_id: user_id}).count() == 0) {
+				console.log("INSERTING POS");
+				DateResponses.insert({
+					date_id: date_id,
+					user_id: user_id,
+					state: "positive",
+				});
+			}
+			else {
+				console.log("UPDATING POS");
+				DateResponses.update({date_id: date_id, user_id: user_id}, {$set: {state: "positive"}});
+			}
 		},
 
 		set_date_negative: function(date_id, user_id) {
-			console.log("NEG");
-			DateResponses.insert({
-				date_id: date_id,
-				user_id: user_id,
-				state: "negative",
-			});
+			if(DateResponses.find({date_id: date_id, user_id: user_id}).count() == 0) {
+				console.log("INSERTING NEG");
+				DateResponses.insert({
+					date_id: date_id,
+					user_id: user_id,
+					state: "negative",
+				});
+			}
+			else {
+				console.log("UPDATING NEG");
+				DateResponses.update({date_id: date_id, user_id: user_id}, {$set: {state: "negative"}});
+			}
 		},
 	});
 });
