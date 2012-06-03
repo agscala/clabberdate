@@ -10,8 +10,7 @@ Meteor.startup(function() {
 
 	Session.set("user_id", amplify.store("user_id"));
 
-	CalendarPicker = new Kalendae("new-calendar-date-start", {
-		attachTo: "new-calendar-dates-wrapper",
+	CalendarPicker = new Kalendae("new-calendar-dates-wrapper", {
 		months: 2,
 		mode: 'range',
 		direction: "today-future",
@@ -77,8 +76,18 @@ Template.calendar.comments = function() {
 	else return [];
 };
 
+Template.calendar.users = function() {
+	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
+
+	return (calendar? calendar.users : []);
+}
+
 Template.calendar.events = {
 	"click #calendar-comment-submit": function() {
+		Calendars.update({_id: Session.get("calendar_id")}, {
+			$addToSet: {users: Session.get("user_id")}
+		});
+
 		var comment = $("#calendar-comment").val();
 		Calendars.update({_id: Session.get("calendar_id")}, {
 			$push: {comments: {
@@ -119,9 +128,17 @@ Template.date.username = function(user_id) {
 
 Template.date.events = {
 	"click .set-positive": function() {
+		Calendars.update({_id: Session.get("calendar_id")}, {
+			$addToSet: {users: Session.get("user_id")}
+		});
+
 		Meteor.call("set_date_positive", this._id, Session.get("user_id"));
 	},
 	"click .set-negative": function() {
+		Calendars.update({_id: Session.get("calendar_id")}, {
+			$addToSet: {users: Session.get("user_id")}
+		});
+
 		Meteor.call("set_date_negative", this._id, Session.get("user_id"));
 	},
 };
@@ -159,19 +176,56 @@ Template.user_prompt.events = {
 	},
 }
 
+Template.new_calendar.new_calendar_name_error = function() {
+	return Session.get("new_calendar_name_error");
+};
+
+Template.new_calendar.new_calendar_dates_error = function() {
+	return Session.get("new_calendar_dates_error");
+};
+
 Template.new_calendar.events = {
 	"click #new-calendar-submit": function() {
 		var name = $("#new-calendar-name").val();
+		var date_start = undefined;
+		var date_end = undefined;
+		var valid = true;
+
+		if(name.length < 10) {
+			Session.set("new_calendar_name_error", "Description must be 10 characters or longer");
+			valid = false;
+		}
 
 		if(CalendarPicker) {
 			var selected_dates = CalendarPicker.getSelectedAsText();
-			var date_start = moment(selected_dates[0]);
-			var date_end = moment(selected_dates[1]);
+			date_start = moment(selected_dates[0]);
+			date_end = moment(selected_dates[1]);
+
+			if(date_end.diff(date_start, "days") > 61) {
+				Session.set("new_calendar_dates_error", "Date range must be less than 2 months");
+				valid = false;
+			}
 		}
 
-		Meteor.call("create_calendar", name, date_start, date_end, Session.get("user_id"), function(error, calendar_id) {
-			store_created_calendar(calendar_id);
-			Router.navigate("/calendar/" + calendar_id, {trigger: true});
+		if(valid) {
+			Meteor.call("create_calendar", name, date_start, date_end, Session.get("user_id"), function(error, calendar_id) {
+				store_created_calendar(calendar_id);
+				Router.navigate("/calendar/" + calendar_id, {trigger: true});
+
+				Session.set("new_calendar_name_error", undefined);
+				Session.set("new_calendar_dates_error", undefined);
+			});
+		}
+
+		// Hack to get the calendar to not disappear...
+		Meteor.defer(function() {
+			$("#new-calendar-dates-wrapper").html("");
+			CalendarPicker = new Kalendae("new-calendar-dates-wrapper", {
+				months: 2,
+				mode: 'range',
+				selected: CalendarPicker.getSelected(),
+				direction: "today-future",
+			});
 		});
 	},
 };

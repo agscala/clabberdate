@@ -13,8 +13,12 @@
 </body>
 
 <template name="new_calendar">
+	<p class="error">{{ new_calendar_name_error }}</p>
 	Name: <input type="textbox" id="new-calendar-name" /><br/>
+
+	<p class="error">{{ new_calendar_dates_error }}</p>
 	<div id="new-calendar-dates-wrapper"></div>
+
 	<input type="submit" id="new-calendar-submit" value="Create Calendar" />
 </template>
 
@@ -27,11 +31,18 @@
 <template name="calendar">
 	{{# if calendar }}
 	{{# with calendar }}
-		{{ description }} - {{ _id }}
+		<h2>{{ description }}</h2> - {{ _id }}
 	{{/ with }}
 	{{/ if }}
 	<br/>
 
+	<strong>People contributing</strong><br/>
+	{{# each users }}
+		{{ username this }}
+	{{/ each }}
+	<br/>
+
+	<br/>
 	{{# each dates }}
 		{{> date }}
 	{{/ each }}
