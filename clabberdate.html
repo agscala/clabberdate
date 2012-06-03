@@ -3,10 +3,18 @@
 </head>
 
 <body>
+  {{> new_calendar }}
+  <hr/>
   {{> user_prompt }}
   <hr/>
   {{> calendar }}
 </body>
+
+<template name="new_calendar">
+	Name: <input type="textbox" id="new-calendar-name" /><br/>
+	<div id="new-calendar-dates-wrapper"></div>
+	<input type="submit" id="new-calendar-submit" value="Submit" />
+</template>
 
 <template name="user_prompt">
 	<input type="text" id="choose-username" value="{{ username }}" />

@@ -1,3 +1,5 @@
+var CalendarPicker = undefined;
+
 Meteor.startup(function() {
 	Meteor.autosubscribe(function() {
 		Meteor.subscribe("calendars");
@@ -7,6 +9,13 @@ Meteor.startup(function() {
 	});
 
 	Session.set("user_id", amplify.store("user_id"));
+
+	CalendarPicker = new Kalendae("new-calendar-date-start", {
+		attachTo: "new-calendar-dates-wrapper",
+		months: 2,
+		mode: 'range',
+		direction: "today-future",
+	});
 });
 
 var refresh_user = function() {
@@ -144,4 +153,21 @@ Template.user_prompt.events = {
 		}
 	},
 }
+
+Template.new_calendar.events = {
+	"click #new-calendar-submit": function() {
+		var name = $("#new-calendar-name").val();
+
+		if(CalendarPicker) {
+			var selected_dates = CalendarPicker.getSelectedAsText();
+			var date_start = moment(selected_dates[0]);
+			var date_end = moment(selected_dates[1]);
+		}
+
+		Meteor.call("create_calendar", name, date_start, date_end, function(error, calendar_id) {
+			// console.log(Session.get("calendar_id"));
+			Router.navigate("/calendar/" + calendar_id, {trigger: true});
+		});
+	},
+};
 
