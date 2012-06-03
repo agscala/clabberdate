@@ -14,6 +14,7 @@ Meteor.startup(function() {
 		months: 3,
 		mode: 'range',
 		direction: "today-future",
+		columnHeaderLength: 3,
 	});
 });
 
@@ -26,6 +27,7 @@ var redraw_calendar = function() {
 			mode: 'range',
 			selected: CalendarPicker.getSelected(),
 			direction: "today-future",
+			columnHeaderLength: 3,
 		});
 	});
 };
@@ -191,12 +193,12 @@ Template.user_prompt.events = {
 
 Template.new_calendar.new_calendar_name_error = function() {
 	redraw_calendar();
-	// return Session.get("new_calendar_name_error");
+	return Session.get("new_calendar_name_error");
 };
 
 Template.new_calendar.new_calendar_dates_error = function() {
 	redraw_calendar();
-	// return Session.get("new_calendar_dates_error");
+	return Session.get("new_calendar_dates_error");
 };
 
 Template.new_calendar.events = {
@@ -220,12 +222,13 @@ Template.new_calendar.events = {
 				Session.set("new_calendar_dates_error", "Date range must be less than 2 months");
 				valid = false;
 			}
+
+			if(date_end.diff(date_start, "days") == 0) {
+				Session.set("new_calendar_dates_error", "Select two dates.");
+				valid = false;
+			}
 		}
 
-		if(!date_end || !date_start) {
-			Session.set("new_calendar_dates_error", "Select two dates.");
-			valid = false;
-		}
 
 		if(valid) {
 			Meteor.call("create_calendar", name, date_start, date_end, Session.get("user_id"), function(error, calendar_id) {
