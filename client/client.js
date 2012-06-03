@@ -36,7 +36,6 @@ var refresh_user = function() {
 
 Template.calendar.calendar = function() {
 	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
-	// console.log(calendar);
 	return calendar;
 };
 
@@ -97,7 +96,6 @@ Template.date.format_date = function(date) {
 };
 
 Template.date.positive_count = function(date_id) {
-	console.log(date_id);
 	return DateResponses.find({date_id: date_id, state: "positive"}).count();
 };
 

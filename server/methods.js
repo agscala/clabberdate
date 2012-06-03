@@ -40,12 +40,6 @@ Meteor.startup(function() {
 		},
 
 		create_calendar: function(description, date_start, date_end) {
-			// console.log("CREATE CALENDAR");
-			// Check for existing calendar
-			var calendar = Calendars.findOne({description: description});
-			if(calendar)
-				return calendar._id;
-
 			var dates = date_range(date_start, date_end);
 
 			var date_ids = [];
