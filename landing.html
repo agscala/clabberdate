@@ -1,6 +1,12 @@
 <template name="landing">
 <div id="landing">
-	{{> new_calendar }}
+	<p class="error">{{ new_calendar_name_error }}</p>
+	Name: <input type="textbox" id="new-calendar-name" /><br/>
+
+	<p class="error">{{ new_calendar_dates_error }}</p>
+	<div id="new-calendar-dates-wrapper"></div>
+
+	<input type="submit" id="new-calendar-submit" value="Create Calendar" />
 </div>
 </template>
 

@@ -191,17 +191,17 @@ Template.user_prompt.events = {
 	},
 }
 
-Template.new_calendar.new_calendar_name_error = function() {
+Template.landing.new_calendar_name_error = function() {
 	redraw_calendar();
 	return Session.get("new_calendar_name_error");
 };
 
-Template.new_calendar.new_calendar_dates_error = function() {
+Template.landing.new_calendar_dates_error = function() {
 	redraw_calendar();
 	return Session.get("new_calendar_dates_error");
 };
 
-Template.new_calendar.events = {
+Template.landing.events = {
 	"click #new-calendar-submit": function() {
 		var name = $("#new-calendar-name").val();
 		var date_start = undefined;
@@ -249,3 +249,9 @@ Template.header.calendars = function() {
 		return Calendars.find({creator_id: Session.get("user_id")});
 	}
 };
+
+Template.header.events = {
+	"click h1": function() {
+		Router.navigate("/", {trigger: true});
+	},
+}

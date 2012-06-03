@@ -8,24 +8,12 @@
 	{{# if is_page "landing" }}
 		{{> landing }}
 	{{ else }}
-		{{> new_calendar }}
-		<hr/>
 		<hr/>
 		{{> user_prompt }}
 		<hr/>
 		{{> calendar }}
 	{{/ if }}
 </body>
-
-<template name="new_calendar">
-	<p class="error">{{ new_calendar_name_error }}</p>
-	Name: <input type="textbox" id="new-calendar-name" /><br/>
-
-	<p class="error">{{ new_calendar_dates_error }}</p>
-	<div id="new-calendar-dates-wrapper"></div>
-
-	<input type="submit" id="new-calendar-submit" value="Create Calendar" />
-</template>
 
 <template name="user_prompt">
 	Username: <input type="text" id="choose-username" value="{{ username }}" />
