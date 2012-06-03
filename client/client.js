@@ -11,11 +11,24 @@ Meteor.startup(function() {
 	Session.set("user_id", amplify.store("user_id"));
 
 	CalendarPicker = new Kalendae("new-calendar-dates-wrapper", {
-		months: 2,
+		months: 3,
 		mode: 'range',
 		direction: "today-future",
 	});
 });
+
+var redraw_calendar = function() {
+	// Hack to get the calendar to not disappear...
+	Meteor.defer(function() {
+		$("#new-calendar-dates-wrapper").html("");
+		CalendarPicker = new Kalendae("new-calendar-dates-wrapper", {
+			months: 3,
+			mode: 'range',
+			selected: CalendarPicker.getSelected(),
+			direction: "today-future",
+		});
+	});
+};
 
 var store_created_calendar = function(calendar_id) {
 	var calendars = amplify.store("created_calendar_ids") || [];
@@ -177,11 +190,13 @@ Template.user_prompt.events = {
 }
 
 Template.new_calendar.new_calendar_name_error = function() {
-	return Session.get("new_calendar_name_error");
+	redraw_calendar();
+	// return Session.get("new_calendar_name_error");
 };
 
 Template.new_calendar.new_calendar_dates_error = function() {
-	return Session.get("new_calendar_dates_error");
+	redraw_calendar();
+	// return Session.get("new_calendar_dates_error");
 };
 
 Template.new_calendar.events = {
@@ -207,6 +222,11 @@ Template.new_calendar.events = {
 			}
 		}
 
+		if(!date_end || !date_start) {
+			Session.set("new_calendar_dates_error", "Select two dates.");
+			valid = false;
+		}
+
 		if(valid) {
 			Meteor.call("create_calendar", name, date_start, date_end, Session.get("user_id"), function(error, calendar_id) {
 				store_created_calendar(calendar_id);
@@ -217,20 +237,11 @@ Template.new_calendar.events = {
 			});
 		}
 
-		// Hack to get the calendar to not disappear...
-		Meteor.defer(function() {
-			$("#new-calendar-dates-wrapper").html("");
-			CalendarPicker = new Kalendae("new-calendar-dates-wrapper", {
-				months: 2,
-				mode: 'range',
-				selected: CalendarPicker.getSelected(),
-				direction: "today-future",
-			});
-		});
+		redraw_calendar();
 	},
 };
 
-Template.recent_calendars.calendars = function() {
+Template.header.calendars = function() {
 	if(Session.get("user_id")) {
 		return Calendars.find({creator_id: Session.get("user_id")});
 	}

@@ -3,13 +3,18 @@
 </head>
 
 <body>
-  {{> new_calendar }}
-  <hr/>
-  {{> recent_calendars }}
-  <hr/>
-  {{> user_prompt }}
-  <hr/>
-  {{> calendar }}
+	{{> header }}
+
+	{{# if is_page "landing" }}
+		{{> landing }}
+	{{ else }}
+		{{> new_calendar }}
+		<hr/>
+		<hr/>
+		{{> user_prompt }}
+		<hr/>
+		{{> calendar }}
+	{{/ if }}
 </body>
 
 <template name="new_calendar">
@@ -70,8 +75,5 @@
 
 <template name="recent_calendars">
 Calendars you've made:<br/>
-{{# each calendars }}
-	<a href="/calendar/{{ _id }}">{{ description }}</a><br/>
-{{/ each }}
 </template>
 

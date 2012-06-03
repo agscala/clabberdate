@@ -1,0 +1,19 @@
+<template name="header">
+	<header>
+		<h1>Clabberdate</h1>
+		<div class="sub-logo">Collaborate on a Date</div>
+
+		<div class="your-calendars">
+			<div class="show-your-calendars">
+				Your Calendars
+			</div>
+			<div class="your-calendars-list">
+				{{# each calendars }}
+				<div>
+					<a href="/calendar/{{ _id }}">{{ description }}</a>
+				</div>
+				{{/ each }}
+			</div>
+		</div>
+	</header>
+</template>

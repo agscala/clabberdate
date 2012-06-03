@@ -1,0 +1,36 @@
+*:not(".kalendae") {
+	box-sizing: border-box;
+}
+
+p.error {
+	color: black;
+	background-color: yellow;
+}
+
+body {
+	width: 960px;
+	margin: 0px auto;
+}
+
+header {
+	border: 1px solid black;
+	position: relative;
+
+	.your-calendars {
+		position: absolute;
+		right: 0px;
+		top: 0px;
+
+		width: 200px;
+
+		.show-your-calendars {
+			background-color: red;
+		}
+		.your-calendars-list {
+			display: none;
+			background-color: white;
+			border: 1px solid black;
+		}
+	}
+}
+
