@@ -41,6 +41,40 @@ Template.calendar.dates = function() {
 	else return [];
 };
 
+Template.calendar.username = function(user_id) {
+	var user = Users.findOne({_id: user_id});
+	if(user)
+		return user.name;
+	else return ""
+};
+
+Template.calendar.human_time = function(date) {
+	return moment(date._d).fromNow();
+};
+
+Template.calendar.comments = function() {
+	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
+
+	if(calendar)
+	{
+		return calendar.comments;
+	}
+	else return [];
+};
+
+Template.calendar.events = {
+	"click #calendar-comment-submit": function() {
+		var comment = $("#calendar-comment").val();
+		Calendars.update({_id: Session.get("calendar_id")}, {
+			$push: {comments: {
+				user_id: Session.get("user_id"),
+				text: comment,
+				time: moment(),
+			}}
+		});
+	},
+};
+
 Template.date.is_positive_response = function(response) {
 	if(response.state == "positive")
 		return true;
