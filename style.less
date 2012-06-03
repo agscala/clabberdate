@@ -10,26 +10,67 @@ p.error {
 body {
 	width: 960px;
 	margin: 0px auto;
+	font-family: 'Helvetica Neue', 'Helvetica', 'Ariel', sans;
 }
 
 header {
-	border: 1px solid black;
 	position: relative;
+	margin-bottom: 20px;
+
+	.sub-logo {
+		position: relative;
+		top: -20px;
+	}
+
 
 	.your-calendars {
 		position: absolute;
 		right: 0px;
 		top: 0px;
 
-		width: 200px;
+		box-sizing: border-box;
+		cursor: pointer;
+
+		width: 320px;
+		padding: 10px 10px;
+		border-radius: 5px;
+		border: 1px solid black;
+
+		background: -moz-linear-gradient(top,
+			#ffffff 0%,
+			#d0d0d4);
+		background: -webkit-gradient(linear, left top, left bottom,
+				from(#ffffff),
+				to(#eee));
+
+		border-radius: 4px;
+		-moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+		border: 1px solid #bfc1c7;
+
+		text-shadow: 0px -1px 1px rgba(255,255,255,0.2),
+			0px 1px 1px rgba(255,255,255,0.5);
 
 		.show-your-calendars {
-			background-color: red;
+			text-align: right;
+			font-weight: bold;
 		}
+
 		.your-calendars-list {
 			display: none;
-			background-color: white;
-			border: 1px solid black;
+
+			div {
+				margin-bottom: 10px;
+				a {
+					color: #666;
+					text-decoration: none;
+					border-bottom: 1px dotted #888;
+				}
+				a:hover {
+					color: black;
+					border-bottom: 2px solid #888;
+				}
+			}
 		}
 	}
 }

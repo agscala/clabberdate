@@ -1,12 +1,31 @@
 <template name="landing">
 <div id="landing">
-	<p class="error">{{ new_calendar_name_error }}</p>
-	Name: <input type="textbox" id="new-calendar-name" /><br/>
+	<div class="new-calendar-step-label">
+		1. Describe the event you want to organize:
+	</div>
 
-	<p class="error">{{ new_calendar_dates_error }}</p>
+	<input type="textbox" id="new-calendar-name" />
+	{{# if new_calendar_name_error }}
+	<div class="error">{{ new_calendar_name_error }}</div>
+	{{/ if }}
+
+	<div class="new-calendar-step-label">
+		2. Pick dates for everyone to vote on:
+	</div>
+
 	<div id="new-calendar-dates-wrapper"></div>
 
-	<input type="submit" id="new-calendar-submit" value="Create Calendar" />
+	{{# if new_calendar_dates_error }}
+	<div class="error">{{ new_calendar_dates_error }}</div>
+	{{/ if }}
+
+	<div class="new-calendar-step-label" id="new-calendar-submit-wrapper">
+		3. <input type="submit" id="new-calendar-submit" value="Create Calendar" />
+	</div>
+
+	<div class="new-calendar-step-label">
+		4. <em>Share the URL with friends or coworkers.</em>
+	</div>
 </div>
 </template>
 

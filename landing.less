@@ -1,10 +1,82 @@
 #landing {
+	.new-calendar-step-label {
+		font-size: 1.5em;
+	}
 
+	#new-calendar-name {
+		font-size: 2.2em;
+		height: 50px;
+		width: 600px;
+		display: inline-block;
+		margin-bottom: 20px;
+	}
+
+	#new-calendar-dates-wrapper {
+		margin-bottom: 20px;
+	}
+
+	#new-calendar-submit-wrapper {
+		margin-bottom: 10px;
+	}
+
+	#new-calendar-submit {
+		position: relative;
+		cursor: pointer;
+		top: -2px;
+		font-size: 14px;
+		color: #000000;
+		padding: 8px 20px;
+
+		background: -moz-linear-gradient(top,
+			#ffffff 0%,
+			#cfe7fc 79%,
+			#d0f5f3 91%,
+			#747999);
+		background: -webkit-gradient(linear, left top, left bottom,
+						from(#ffffff), color-stop(0.79, #cfe7fc),
+						color-stop(0.91, #d0f5f3), to(#747999));
+
+		border-radius: 4px;
+		-moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+		border: 1px solid #bfc1c7;
+
+		/* -moz-box-shadow: 0px 1px 4px rgba(000,000,000,0.6), */
+			/* inset 0px 4px 13px rgba(124,200,2035,1); */
+		/* -webkit-box-shadow: */
+			/* 0px 1px 4px rgba(000,000,000,0.6), */
+			/* inset 0px 4px 13px rgba(124,200,235,1); */
+		text-shadow: 0px -1px 1px rgba(255,255,255,0.2),
+			0px 1px 1px rgba(255,255,255,0.5);
+	}
+
+	.error {
+		background-color: yellow;
+		padding: 3px 5px;
+		display: inline-block;
+		clear: both;
+	}
+}
+
+
+/* KALANDAE HACK */
+#landing {
 	.kalendae {
-		width: 885;
+		width: 960px;
+		margin: 0;
+		padding: 0;
+		padding-top: 10px;
+		padding-bottom: 5px;
+		border: 0;
+		box-type: border-box;
+
+		.k-first-month {
+			margin-left: 5px;
+		}
 
 		.k-calendar {
-			width: 280px;
+			width: 300px;
+			padding: 0 5px 0 10px;
 		}
 
 		.k-title {
@@ -12,7 +84,8 @@
 		}
 
 		.k-separator {
-			height: 350px;
+			width: 1px;
+			height: 300px;
 		}
 
 		.k-title, .k-header, .k-days {
@@ -23,8 +96,12 @@
 			width: 13.5%;
 		}
 
+		.k-separator {
+			margin: 0;
+		}
+
 		.k-days span {
-			width: 37px;
+			width: 33px;
 			height: 37px;
 		}
 	}
