@@ -39,7 +39,7 @@ Meteor.startup(function() {
 			return user.name;
 		},
 
-		create_calendar: function(description, date_start, date_end) {
+		create_calendar: function(description, date_start, date_end, user_id) {
 			var dates = date_range(date_start, date_end);
 
 			var date_ids = [];
@@ -59,6 +59,8 @@ Meteor.startup(function() {
 				users: [],
 				dates: date_ids,
 				comments: [],
+				creator_id: user_id,
+				timestamp: moment(),
 			});
 
 			return calendar_id;

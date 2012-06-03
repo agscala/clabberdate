@@ -5,6 +5,8 @@
 <body>
   {{> new_calendar }}
   <hr/>
+  {{> recent_calendars }}
+  <hr/>
   {{> user_prompt }}
   <hr/>
   {{> calendar }}
@@ -53,5 +55,12 @@
 	</div>
 	<input class="set-positive" type="button" value="Good Date ({{ positive_count _id }})"/>
 	<input class="set-negative" type="button" value="Bad Date ({{ negative_count _id }})"/>
+</template>
+
+<template name="recent_calendars">
+Calendars you've made:<br/>
+{{# each calendars }}
+	<a href="/calendar/{{ _id }}">{{ description }}</a><br/>
+{{/ each }}
 </template>
 
