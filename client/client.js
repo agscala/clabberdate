@@ -25,6 +25,7 @@ var refresh_user = function() {
 
 		Meteor.call("get_username", user_id, function(error, username) {
 			Session.set("username", username);
+			amplify.store("username", username);
 		});
 	}
 	else {
