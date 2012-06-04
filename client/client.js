@@ -9,6 +9,8 @@ Meteor.startup(function() {
 	});
 
 	Session.set("user_id", amplify.store("user_id"));
+	// Session.set("user_id", undefined);
+	// amplify.store("user_id", undefined);
 
 	CalendarPicker = new Kalendae("new-calendar-dates-wrapper", {
 		months: 3,
@@ -16,6 +18,21 @@ Meteor.startup(function() {
 		direction: "today-future",
 		columnHeaderLength: 3,
 	});
+
+	if(Session.equals("user_id", undefined)) {
+		username_prompt(function(username) {
+			save_username(username, function(user_id) {
+				var calendar_id = Session.get("calendar_id");
+				if(calendar_id) {
+					store_created_calendar(calendar_id);
+
+					Calendars.update({_id: calendar_id}, {
+						$addToSet: {users: Session.get("user_id")}
+					});
+				}
+			});
+		});
+	}
 });
 
 var redraw_calendar = function() {
@@ -36,9 +53,6 @@ var store_created_calendar = function(calendar_id) {
 	var calendars = amplify.store("created_calendar_ids") || [];
 	calendars.push(calendar_id);
 	amplify.store("created_calendar_ids", calendars);
-};
-
-var prompt_for_username = function() {
 };
 
 var refresh_user = function() {
@@ -269,6 +283,15 @@ Template.landing.events = {
 
 		redraw_calendar();
 	},
+};
+
+Template.header.current_user = function() {
+	var id = Session.get("user_id");
+	if(id) {
+		var user = Users.findOne({_id: Session.get("user_id")});
+		return (user? user.name : "");
+	}
+	return "";
 };
 
 Template.header.calendars = function() {

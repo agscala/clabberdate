@@ -18,8 +18,6 @@
 		{{> landing }}
 	{{ else }}
 		<hr/>
-		{{> user_prompt }}
-		<hr/>
 		{{> calendar }}
 	{{/ if }}
 </body>
@@ -33,7 +31,7 @@
 <template name="calendar">
 	{{# if calendar }}
 	{{# with calendar }}
-		<h2>{{ description }}</h2> - {{ _id }}
+		<h2>{{ description }}</h2>
 	{{/ with }}
 	{{/ if }}
 	<br/>
@@ -61,7 +59,7 @@
 
 <template name="date">
 	<div class="date">
-		{{ format_date date }} - {{ _id }}
+		{{ format_date date }}
 		{{# each responses _id }}
 			{{ username user_id }}
 		{{/ each }}
