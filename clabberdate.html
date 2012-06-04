@@ -5,6 +5,15 @@
 <body>
 	{{> header }}
 
+	<div id="username-form-wrapper" class="modal">
+		<div class="username-form-label">
+			<img src="/write.png">
+			What name should everyone else see you as?
+			<input type="text" id="username-form" /><br/>
+			<input type="submit" id="username-submit" value="Done" />
+		</div>
+	</div>
+
 	{{# if is_page "landing" }}
 		{{> landing }}
 	{{ else }}

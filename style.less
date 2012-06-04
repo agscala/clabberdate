@@ -2,6 +2,77 @@
 	box-sizing: border-box;
 }
 
+
+#username-form-wrapper {
+	display: none;
+
+	position: absolute;
+	top: 190px;
+	left: 50%;
+	width: 600px;
+	margin-left: -300px;
+	border: 1px solid #686868;
+	background-color: white;
+	border-radius: 5px;
+	z-index: 999;
+
+	padding: 20px;
+
+	-webkit-box-shadow:  0px 0px 130px 130px rgba(255, 255, 255, .9);
+	box-shadow:  0px 0px 130px 130px rgba(255, 255, 255, .9);
+
+	img {
+		position: relative;
+		top: 1px;
+		width: 20px;
+		margin-right: 5px;
+	}
+
+	.username-form-label {
+		font-size: 1.5em;
+	}
+
+	#username-form {
+		margin-top: 20px;
+		font-size: 1.8em;
+		height: 50px;
+		width: 50%;
+		display: inline-block;
+		margin-bottom: 20px;
+	}
+
+	#username-submit {
+		position: relative;
+		cursor: pointer;
+		top: -2px;
+		font-size: 14px;
+		color: #000000;
+		padding: 8px 20px;
+
+		background: -moz-linear-gradient(top,
+			#ffffff 0%,
+			#cfe7fc 79%,
+			#d0f5f3 91%,
+			#747999);
+		background: -webkit-gradient(linear, left top, left bottom,
+						from(#ffffff), color-stop(0.79, #cfe7fc),
+						color-stop(0.91, #d0f5f3), to(#747999));
+
+		border-radius: 4px;
+		-moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+		border: 1px solid #bfc1c7;
+
+		/* -moz-box-shadow: 0px 1px 4px rgba(000,000,000,0.6), */
+			/* inset 0px 4px 13px rgba(124,200,2035,1); */
+		/* -webkit-box-shadow: */
+			/* 0px 1px 4px rgba(000,000,000,0.6), */
+			/* inset 0px 4px 13px rgba(124,200,235,1); */
+		text-shadow: 0px -1px 1px rgba(255,255,255,0.2),
+			0px 1px 1px rgba(255,255,255,0.5);
+	}
+}
+
 p.error {
 	color: black;
 	background-color: yellow;

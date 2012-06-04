@@ -38,6 +38,9 @@ var store_created_calendar = function(calendar_id) {
 	amplify.store("created_calendar_ids", calendars);
 };
 
+var prompt_for_username = function() {
+};
+
 var refresh_user = function() {
 	var user_id = amplify.store("user_id");
 	if(user_id) {
@@ -168,7 +171,27 @@ Template.user_prompt.username = function() {
 		username = "non";
 	}
 	return username;
-}
+};
+
+var save_username = function(username, callback) {
+	amplify.store("username", username);
+	Session.set("username", username);
+
+	if(Session.get("user_id")) {
+		Meteor.call("rename_user", Session.get("user_id"), username, function(error, user_id) {
+			amplify.store("user_id", user_id);
+			Session.set("user_id", user_id);
+			callback(user_id);
+		});
+	}
+	else {
+		Meteor.call("create_user", username, function(error, user_id) {
+			amplify.store("user_id", user_id);
+			Session.set("user_id", user_id);
+			callback(user_id);
+		});
+	}
+};
 
 Template.user_prompt.events = {
 	"click #save-username": function() {
@@ -231,12 +254,16 @@ Template.landing.events = {
 
 
 		if(valid) {
-			Meteor.call("create_calendar", name, date_start, date_end, Session.get("user_id"), function(error, calendar_id) {
-				store_created_calendar(calendar_id);
-				Router.navigate("/calendar/" + calendar_id, {trigger: true});
+			username_prompt(function(username) {
+				save_username(username, function(user_id) {
+					Meteor.call("create_calendar", name, date_start, date_end, user_id, function(error, calendar_id) {
+						store_created_calendar(calendar_id);
+						Router.navigate("/calendar/" + calendar_id, {trigger: true});
 
-				Session.set("new_calendar_name_error", undefined);
-				Session.set("new_calendar_dates_error", undefined);
+						Session.set("new_calendar_name_error", undefined);
+						Session.set("new_calendar_dates_error", undefined);
+					});
+				});
 			});
 		}
 
