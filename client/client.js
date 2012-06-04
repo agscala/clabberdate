@@ -155,7 +155,8 @@ Template.date.responses = function(date_id) {
 };
 
 Template.date.username = function(user_id) {
-	return Users.findOne({_id: user_id}).name;
+	var user = Users.findOne({_id: user_id}).name;
+	return (user? user.name : "");
 };
 
 Template.date.events = {
@@ -271,6 +272,10 @@ Template.landing.events = {
 			username_prompt(function(username) {
 				save_username(username, function(user_id) {
 					Meteor.call("create_calendar", name, date_start, date_end, user_id, function(error, calendar_id) {
+						Calendars.update({_id: calendar_id}, {
+							$addToSet: {users: user_id}
+						});
+
 						store_created_calendar(calendar_id);
 						Router.navigate("/calendar/" + calendar_id, {trigger: true});
 
