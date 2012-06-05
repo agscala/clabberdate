@@ -18,21 +18,6 @@ Meteor.startup(function() {
 		direction: "today-future",
 		columnHeaderLength: 3,
 	});
-
-	if(Session.equals("user_id", undefined)) {
-		username_prompt(function(username) {
-			save_username(username, function(user_id) {
-				var calendar_id = Session.get("calendar_id");
-				if(calendar_id) {
-					store_created_calendar(calendar_id);
-
-					Calendars.update({_id: calendar_id}, {
-						$addToSet: {users: Session.get("user_id")}
-					});
-				}
-			});
-		});
-	}
 });
 
 var redraw_calendar = function() {
@@ -300,9 +285,9 @@ Template.header.current_user = function() {
 };
 
 Template.header.calendars = function() {
-	if(Session.get("user_id")) {
-		return Calendars.find({creator_id: Session.get("user_id")});
-	}
+	var calendar_ids = amplify.store("created_calendar_ids");
+	console.log(calendar_ids);
+	return (calendar_ids? Calendars.find({_id: {$in: calendar_ids}}) : []);
 };
 
 Template.header.events = {
