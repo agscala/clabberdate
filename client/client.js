@@ -136,11 +136,12 @@ Template.date.negative_count = function(date_id) {
 };
 
 Template.date.responses = function(date_id) {
+	console.log( DateResponses.find({date_id: date_id}));
 	return DateResponses.find({date_id: date_id});
 };
 
 Template.date.username = function(user_id) {
-	var user = Users.findOne({_id: user_id}).name;
+	var user = Users.findOne({_id: user_id});
 	return (user? user.name : "");
 };
 
