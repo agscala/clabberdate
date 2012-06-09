@@ -1,0 +1,117 @@
+.clear {
+	clear: both;
+}
+
+#calendar-header {
+	float: left;
+
+	#calendar-description {
+		font-size: 3em;
+		margin: 0;
+		margin-bottom: 5px;
+	}
+
+	#calendar-description-sub {
+		position: relative;
+		top: -10px;
+	}
+
+	#calendar-age {
+		color: #888;
+	}
+
+}
+
+#calendar-contributors {
+	float: right;
+}
+
+#calendar-comment-input {
+	height: 20px;
+	margin-bottom: 10px;
+}
+
+.calendar-comment {
+	margin-bottom: 5px;
+	font-size: .9em;
+
+	.comment-user {
+		display: table-cell;
+		vertical-align: middle;
+		padding: 5px;
+		padding-right: 10px;
+	}
+
+	.comment-time {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		font-size: .7em;
+		padding: 2px 1px 2px 4px;
+		margin-right: 10px;
+		width: 50px;
+	}
+
+	.comment-text {
+		display: table-cell;
+		vertical-align: middle;
+		position: relative;
+		margin-right: 10px;
+	}
+
+	.comment-body {
+		margin-right: 10px;
+		display: table-cell;
+		max-width: 600px;
+		padding: 2px 10px;
+	}
+
+	.comment-date {
+		display: table-cell;
+		vertical-align: middle;
+		font-size: .7em;
+		width: 120px;
+		padding: 2px 1px 2px 10px;
+		margin-right: 2px;
+
+		opacity: 0;
+		transition: opacity .25s ease-in-out;
+		-moz-transition: opacity .25s ease-in-out;
+		-webkit-transition: opacity .25s ease-in-out;
+	}
+}
+
+.calendar-comment:hover .comment-date {
+	opacity: 1;
+}
+
+.arrow_box {
+	position: relative;
+	background: #ffffff;
+	border: 1px solid #BBB;
+	border-radius: 4px;
+}
+.arrow_box:after, .arrow_box:before {
+	right: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-right-color: #ffffff;
+	border-width: 5px;
+	top: 50%;
+	margin-top: -5px;
+}
+
+.arrow_box:before {
+	border-right-color: #BBB;
+	border-width: 6px;
+	top: 50%;
+	margin-top: -6px;
+}
+

@@ -17,7 +17,6 @@
 	{{# if is_page "landing" }}
 		{{> landing }}
 	{{ else }}
-		<hr/>
 		{{> calendar }}
 	{{/ if }}
 </body>
@@ -29,34 +28,62 @@
 </template>
 
 <template name="calendar">
-	{{# if calendar }}
-	{{# with calendar }}
-		<h2>{{ description }}</h2>
-		created by <strong>{{ username creator_id }}</strong> {{ human_time timestamp }}
-		<br/>
-	{{/ with }}
-	{{/ if }}
-	<br/>
+	<div id="calendar-header">
+		{{# if calendar }}
+		{{# with calendar }}
+			<h2 id="calendar-description">{{ description }}</h2>
+			<div id="calendar-description-sub">
+				Organized by <strong>{{ username creator_id }}. </strong>
+				<span id="calendar-age">Created {{ human_time timestamp }}.</span>
+			</div>
+		{{/ with }}
+		{{/ if }}
+	</div>
 
-	<strong>People contributing</strong><br/>
-	{{# each users }}
-		{{ username this }}
-	{{/ each }}
-	<br/>
+	<div id="calendar-contributors">
+		<strong>People contributing</strong>
+		{{# each users }}
+		<div class="calendar-contributor">
+			{{ username this }}
+		</div>
+		{{/ each }}
+	</div>
+	<div class="clear"></div>
 
-	<br/>
+	<div id="calendar-dates">
 	{{# each dates }}
 		{{> date }}
 	{{/ each }}
+	</div>
 
 	<br/>
-	<input type="text" id="calendar-comment" />
+	<input type="text" id="calendar-comment-input" />
 	<input type="submit" id="calendar-comment-submit" value="Comment" />
 
 	<br/>
+
+	<div id="calendar-comments">
 	{{# each comments }}
-		{{ username user_id }} says: {{ text }} - {{ human_time time }}<br/>
+	<div class="calendar-comment">
+		{{# if user_id }}
+		<div class="comment-user">
+			{{ username user_id }}
+		</div>
+		<div class="comment-text arrow_box">
+			<span class="comment-time">
+				{{ comment_time time }}
+			</span>
+			<span class="comment-body">
+				{{ text }}
+			</span>
+		</div>
+		<div class="comment-date">
+			{{ comment_date time }}
+		</div>
+		{{/ if }}
+	</div>
 	{{/ each }}
+	</div>
 </template>
 
 <template name="date">

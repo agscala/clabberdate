@@ -83,12 +83,20 @@ Template.calendar.human_time = function(date) {
 	return moment(date._d).fromNow();
 };
 
+Template.calendar.comment_time = function(date) {
+	return moment(date._d).format("h:mma");
+};
+
+Template.calendar.comment_date = function(date) {
+	return moment(date._d).format("MMMM Do, YYYY");
+};
+
 Template.calendar.comments = function() {
 	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
 
 	if(calendar)
 	{
-		return calendar.comments;
+		return _.sortBy(calendar.comments, function(comment) { return comment.time }).reverse();
 	}
 	else return [];
 };
@@ -105,7 +113,8 @@ Template.calendar.events = {
 			$addToSet: {users: Session.get("user_id")}
 		});
 
-		var comment = $("#calendar-comment").val();
+		var comment = $("#calendar-comment-input").val();
+		$("#calendar-comment-input").val("");
 		Calendars.update({_id: Session.get("calendar_id")}, {
 			$push: {comments: {
 				user_id: Session.get("user_id"),
