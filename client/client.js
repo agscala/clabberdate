@@ -14,7 +14,7 @@ Meteor.startup(function() {
 
 	CalendarPicker = new Kalendae("new-calendar-dates-wrapper", {
 		months: 3,
-		mode: 'range',
+		mode: 'multiple',
 		direction: "today-future",
 		columnHeaderLength: 3,
 	});
@@ -26,7 +26,7 @@ var redraw_calendar = function() {
 		$("#new-calendar-dates-wrapper").html("");
 		CalendarPicker = new Kalendae("new-calendar-dates-wrapper", {
 			months: 3,
-			mode: 'range',
+			mode: 'multiple',
 			selected: CalendarPicker.getSelected(),
 			direction: "today-future",
 			columnHeaderLength: 3,
@@ -248,16 +248,10 @@ Template.landing.events = {
 
 		if(CalendarPicker) {
 			var selected_dates = CalendarPicker.getSelectedAsText();
-			date_start = moment(selected_dates[0]);
-			date_end = moment(selected_dates[1]);
+			console.log(selected_dates);
 
-			if(date_end.diff(date_start, "days") > 61) {
-				Session.set("new_calendar_dates_error", "Date range must be less than 2 months");
-				valid = false;
-			}
-
-			if(date_end.diff(date_start, "days") == 0) {
-				Session.set("new_calendar_dates_error", "Select two dates.");
+			if(selected_dates.length < 2) {
+				Session.set("new_calendar_dates_error", "Select at least two dates.");
 				valid = false;
 			}
 		}
@@ -266,7 +260,7 @@ Template.landing.events = {
 		if(valid) {
 			username_prompt(function(username) {
 				save_username(username, function(user_id) {
-					Meteor.call("create_calendar", name, date_start, date_end, user_id, function(error, calendar_id) {
+					Meteor.call("create_calendar", name, selected_dates, user_id, function(error, calendar_id) {
 						Calendars.update({_id: calendar_id}, {
 							$addToSet: {users: user_id}
 						});

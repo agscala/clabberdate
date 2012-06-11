@@ -39,13 +39,12 @@ Meteor.startup(function() {
 			return user.name;
 		},
 
-		create_calendar: function(description, date_start, date_end, user_id) {
-			var dates = date_range(date_start, date_end);
+		create_calendar: function(description, dates, user_id) {
 
 			var date_ids = [];
 			_.each(dates, function(date) {
 				var date_id = Dates.insert({
-					date: date,
+					date: moment(date),
 					enabled: false,
 				});
 
@@ -53,6 +52,7 @@ Meteor.startup(function() {
 					date_ids.push(id);
 				})(date_id);
 			});
+			console.log(date_ids);
 
 			var calendar_id = Calendars.insert({
 				description: description,
