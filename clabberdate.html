@@ -82,11 +82,12 @@
 		{{> date }}
 	{{/ each }}
 	</div>
+	<div class="clear"></div>
 </template>
 
 <template name="date">
 	<div class="date {{ weekday date }} {{ month date }}">
-		<div class="color-block"></div>
+		<div class="color-block {{ month date }}"></div>
 		{{ format_date date }}
 		<div class="responses">
 		{{# each responses _id }}

@@ -27,7 +27,7 @@
 }
 
 .date {
-	display: inline-block;
+	float: left;
 	width: 100px;
 	height: 120px;
 	background-color: #FAFAFA;
@@ -36,10 +36,24 @@
 	border-radius: 5px;
 
 	.color-block {
-		height: 5px;
-		background-color: red;
-		border-radius: 5px;
+		height: 6px;
+		background-color: black;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
 	}
+	.color-block.January { background-color: red; }
+	.color-block.February { background-color: blue; }
+	.color-block.March { background-color: green; }
+	.color-block.April { background-color: YellowGreen; }
+	.color-block.May { background-color: purple; }
+	.color-block.June { background-color: gray; }
+	.color-block.July { background-color: Darkorange; }
+	.color-block.August { background-color: yellow; }
+	.color-block.September { background-color: DodgerBlue; }
+	.color-block.October { background-color: HotPink; }
+	.color-block.November { background-color: Lime; }
+	.color-block.December { background-color: maroon; }
+
 	.responses {
 		display: none;
 	}
