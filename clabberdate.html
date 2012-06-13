@@ -17,7 +17,9 @@
 	{{# if is_page "landing" }}
 		{{> landing }}
 	{{ else }}
-		{{> calendar }}
+		{{> calendar_header }}
+		{{> calendar_dates }}
+		{{> calendar_comments }}
 	{{/ if }}
 </body>
 
@@ -27,7 +29,7 @@
 	{{ user_id }}
 </template>
 
-<template name="calendar">
+<template name="calendar_header">
 	<div id="calendar-header">
 		{{# if calendar }}
 		{{# with calendar }}
@@ -39,7 +41,10 @@
 		{{/ with }}
 		{{/ if }}
 	</div>
+	<div class="clear"></div>
+</template>
 
+<template name="calendar_contributors">
 	<div id="calendar-contributors">
 		<strong>People contributing</strong>
 		{{# each users }}
@@ -48,21 +53,58 @@
 		</div>
 		{{/ each }}
 	</div>
-	<div class="clear"></div>
+</template>
 
+<template name="calendar_dates">
+	<input type="button" value="All" class="dow-filter" />
+	<input type="button" value="Sunday" class="dow-filter" />
+	<input type="button" value="Monday" class="dow-filter" />
+	<input type="button" value="Tuesday" class="dow-filter" />
+	<input type="button" value="Wednesday" class="dow-filter" />
+	<input type="button" value="Thursday" class="dow-filter" />
+	<input type="button" value="Friday" class="dow-filter" />
+	<input type="button" value="Saturday" class="dow-filter" />
+	<br/>
+	<input type="button" value="January" class="month-filter" />
+	<input type="button" value="February" class="month-filter" />
+	<input type="button" value="March" class="month-filter" />
+	<input type="button" value="April" class="month-filter" />
+	<input type="button" value="May" class="month-filter" />
+	<input type="button" value="June" class="month-filter" />
+	<input type="button" value="July" class="month-filter" />
+	<input type="button" value="August" class="month-filter" />
+	<input type="button" value="September" class="month-filter" />
+	<input type="button" value="October" class="month-filter" />
+	<input type="button" value="November" class="month-filter" />
+	<input type="button" value="December" class="month-filter" />
 	<div id="calendar-dates">
 	{{# each dates }}
 		{{> date }}
 	{{/ each }}
 	</div>
+</template>
 
-	<br/>
-	<input type="text" id="calendar-comment-input" />
-	<input type="submit" id="calendar-comment-submit" value="Comment" />
+<template name="date">
+	<div class="date {{ weekday date }} {{ month date }}">
+		<div class="color-block"></div>
+		{{ format_date date }}
+		<div class="responses">
+		{{# each responses _id }}
+			{{ username user_id }}
+		{{/ each }}
+		</div>
 
-	<br/>
+		<input class="set-positive" type="button" value="Good Date ({{ positive_count _id }})"/>
+		<input class="set-negative" type="button" value="Bad Date ({{ negative_count _id }})"/>
+	</div>
+</template>
+
+<template name="calendar_comments">
 
 	<div id="calendar-comments">
+		<input type="text" id="calendar-comment-input" />
+		<input type="submit" id="calendar-comment-submit" value="Comment" /> <br/>
+
 	{{# each comments }}
 	<div class="calendar-comment">
 		{{# if user_id }}
@@ -84,17 +126,6 @@
 	</div>
 	{{/ each }}
 	</div>
-</template>
-
-<template name="date">
-	<div class="date">
-		{{ format_date date }}
-		{{# each responses _id }}
-			{{ username user_id }}
-		{{/ each }}
-	</div>
-	<input class="set-positive" type="button" value="Good Date ({{ positive_count _id }})"/>
-	<input class="set-negative" type="button" value="Bad Date ({{ negative_count _id }})"/>
 </template>
 
 <template name="recent_calendars">

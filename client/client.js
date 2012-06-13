@@ -20,6 +20,16 @@ Meteor.startup(function() {
 	});
 });
 
+var isotope_dates = function() {
+	Meteor.defer(function() {
+		$("#calendar-dates").isotope({
+			itemSelector: ".date",
+			layoutMode: "fitRows",
+			filter: ".Monday",
+		});
+	});
+}
+
 var redraw_calendar = function() {
 	// Hack to get the calendar to not disappear...
 	Meteor.defer(function() {
@@ -56,13 +66,23 @@ var refresh_user = function() {
 	}
 };
 
-Template.calendar.calendar = function() {
-	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
-	return calendar;
+Template.calendar_header.calendar = function() {
+	return Calendars.findOne({_id: Session.get("calendar_id")});
+};
+
+Template.calendar_header.username = function(user_id) {
+	var user = Users.findOne({_id: user_id});
+	return (user? user.name : "");
+};
+
+Template.calendar_header.human_time = function(date) {
+	return moment(date._d).fromNow();
 };
 
 
-Template.calendar.dates = function() {
+Template.calendar_dates.dates = function() {
+	// isotope_dates();
+
 	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
 
 	if(calendar)
@@ -72,26 +92,20 @@ Template.calendar.dates = function() {
 	else return [];
 };
 
-Template.calendar.username = function(user_id) {
+Template.calendar_comments.username = function(user_id) {
 	var user = Users.findOne({_id: user_id});
-	if(user)
-		return user.name;
-	else return ""
+	return (user? user.name : "");
 };
 
-Template.calendar.human_time = function(date) {
-	return moment(date._d).fromNow();
-};
-
-Template.calendar.comment_time = function(date) {
+Template.calendar_comments.comment_time = function(date) {
 	return moment(date._d).format("h:mma");
 };
 
-Template.calendar.comment_date = function(date) {
+Template.calendar_comments.comment_date = function(date) {
 	return moment(date._d).format("MMMM Do, YYYY");
 };
 
-Template.calendar.comments = function() {
+Template.calendar_comments.comments = function() {
 	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
 
 	if(calendar)
@@ -101,13 +115,22 @@ Template.calendar.comments = function() {
 	else return [];
 };
 
-Template.calendar.users = function() {
-	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
+Template.header.current_user = function() {
+	var user = Users.findOne({_id: Session.get("user_id")});
+	return (user? user.name : "");
+}
 
+Template.calendar_contributors.users = function() {
+	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
 	return (calendar? calendar.users : []);
 }
 
-Template.calendar.events = {
+Template.calendar_contributors.username = function(user_id) {
+	var user = Users.findOne({_id: user_id});
+	return (user? user.name : "");
+};
+
+Template.calendar_comments.events = {
 	"click #calendar-comment-submit": function() {
 		Calendars.update({_id: Session.get("calendar_id")}, {
 			$addToSet: {users: Session.get("user_id")}
@@ -123,6 +146,22 @@ Template.calendar.events = {
 			}}
 		});
 	},
+};
+
+Template.date.weekday = function(date) {
+	if(date) {
+		var m_date = moment(date._d);
+		return m_date.format("dddd");
+	}
+	else console.log(date);
+};
+
+Template.date.month = function(date) {
+	if(date) {
+		var m_date = moment(date._d);
+		return m_date.format("MMMM");
+	}
+	else console.log(date);
 };
 
 Template.date.is_positive_response = function(response) {
@@ -145,7 +184,6 @@ Template.date.negative_count = function(date_id) {
 };
 
 Template.date.responses = function(date_id) {
-	console.log( DateResponses.find({date_id: date_id}));
 	return DateResponses.find({date_id: date_id});
 };
 
@@ -248,7 +286,6 @@ Template.landing.events = {
 
 		if(CalendarPicker) {
 			var selected_dates = CalendarPicker.getSelectedAsText();
-			console.log(selected_dates);
 
 			if(selected_dates.length < 2) {
 				Session.set("new_calendar_dates_error", "Select at least two dates.");
@@ -279,18 +316,8 @@ Template.landing.events = {
 	},
 };
 
-Template.header.current_user = function() {
-	var id = Session.get("user_id");
-	if(id) {
-		var user = Users.findOne({_id: Session.get("user_id")});
-		return (user? user.name : "");
-	}
-	return "";
-};
-
 Template.header.calendars = function() {
 	var calendar_ids = amplify.store("created_calendar_ids");
-	console.log(calendar_ids);
 	return (calendar_ids? Calendars.find({_id: {$in: calendar_ids}}) : []);
 };
 
