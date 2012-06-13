@@ -20,7 +20,7 @@ var Router = Backbone.Router.extend({
 		Session.set("current_page", "calendar");
 		Session.set("calendar_id", calendar_id);
 
-		if(!Session.get("user_id")) {
+		if(Session.get("user_id") === undefined) {
 			username_prompt(function(username) {
 				save_username(username, function(user_id) {
 					var calendar_id = Session.get("calendar_id");
