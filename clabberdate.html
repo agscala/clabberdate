@@ -88,15 +88,32 @@
 <template name="date">
 	<div class="date {{ weekday date }} {{ month date }}">
 		<div class="color-block {{ month date }}"></div>
-		{{ format_date date }}
+		<div class="datestamp">
+			{{ format_date date }}
+		</div>
+
 		<div class="responses">
 		{{# each responses _id }}
 			{{ username user_id }}
 		{{/ each }}
 		</div>
 
-		<input class="set-positive" type="button" value="Good Date ({{ positive_count _id }})"/>
-		<input class="set-negative" type="button" value="Bad Date ({{ negative_count _id }})"/>
+		<div class="set-positive">
+			<div class="icon">
+				l
+			</div>
+			<div class="count">
+				{{ positive_count _id }}
+			</div>
+		</div>
+		<div class="set-negative">
+			<div class="icon">
+				L
+			</div>
+			<div class="count">
+				{{ negative_count _id }}
+			</div>
+		</div>
 	</div>
 </template>
 

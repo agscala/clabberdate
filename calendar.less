@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'ModernPictogramsNormal';
+    src: url('modernpics-webfont.ttf') format('truetype'),
+         url('modernpics-webfont.svg#ModernPictogramsNormal') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .clear {
 	clear: both;
 }
@@ -32,9 +40,37 @@
 	height: 120px;
 	background-color: #FAFAFA;
 	margin: 5px;
-	border: 2px solid #EEE;
+	border: 2px solid #FAFAFA;
 	border-radius: 5px;
 	box-shadow: 1px 1px 7px #666;
+	padding: 3px;
+
+	.datestamp {
+		font-size: 14px;
+	}
+
+	.set-positive, .set-negative {
+		display: inline-block;
+	}
+
+	.icon {
+		height: 40px;
+		width: 40px;
+		text-align: center;
+		display: table-cell;
+		vertical-align: middle;
+		font: 35px 'ModernPictogramsNormal', Arial, sans-serif;
+		letter-spacing: 0;
+		color: #666;
+		border-radius: 20px;
+		cursor: pointer;
+		border: 1px solid transparent;
+	}
+
+	.icon:hover {
+		color: black;
+		border: 1px solid #666;
+	}
 
 	.color-block {
 		height: 6px;

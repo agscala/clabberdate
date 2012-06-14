@@ -17,9 +17,7 @@ var date_range = function(date_start, date_end) {
 Meteor.startup(function() {
 	Meteor.methods({
 		create_user: function(username) {
-			console.log("CREATE USER: " + username);
 			var user_id = Users.insert({name: username});
-			console.log(user_id);
 			return user_id;
 		},
 
@@ -52,7 +50,6 @@ Meteor.startup(function() {
 					date_ids.push(id);
 				})(date_id);
 			});
-			console.log(date_ids);
 
 			var calendar_id = Calendars.insert({
 				description: description,
