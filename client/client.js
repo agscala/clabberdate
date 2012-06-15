@@ -130,22 +130,30 @@ Template.calendar_contributors.username = function(user_id) {
 	return (user? user.name : "");
 };
 
-Template.calendar_comments.events = {
-	"click #calendar-comment-submit": function() {
-		Calendars.update({_id: Session.get("calendar_id")}, {
-			$addToSet: {users: Session.get("user_id")}
-		});
+var submitComment = function() {
+	Calendars.update({_id: Session.get("calendar_id")}, {
+		$addToSet: {users: Session.get("user_id")}
+	});
 
-		var comment = $("#calendar-comment-input").val();
-		$("#calendar-comment-input").val("");
-		Calendars.update({_id: Session.get("calendar_id")}, {
-			$push: {comments: {
-				user_id: Session.get("user_id"),
-				text: comment,
-				time: moment(),
-			}}
-		});
+	var comment = $("#calendar-comment-input").val();
+	$("#calendar-comment-input").val("");
+	$("#calendar-comment-input").focus();
+	Calendars.update({_id: Session.get("calendar_id")}, {
+		$push: {comments: {
+			user_id: Session.get("user_id"),
+			text: comment,
+			time: moment(),
+		}}
+	});
+};
+
+Template.calendar_comments.events = {
+	"click #calendar-comment-submit": submitComment,
+	"keypress #calendar-comment-input": function(event) {
+		if(event.keyCode == 13)
+			submitComment();
 	},
+
 };
 
 Template.date.weekday = function(date) {
@@ -172,7 +180,7 @@ Template.date.is_positive_response = function(response) {
 
 Template.date.format_date = function(date) {
 	var date = moment(date._d);
-	return date.format("LL");
+	return date.format("MMMM Do, YYYY");
 };
 
 Template.date.positive_count = function(date_id) {

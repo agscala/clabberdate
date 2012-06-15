@@ -44,38 +44,54 @@
 	border-radius: 5px;
 	box-shadow: 1px 1px 7px #666;
 	padding: 3px;
+	position: relative;
 
 	.datestamp {
 		font-size: 14px;
+		margin-bottom: 10px;
 	}
 
-	.set-positive, .set-negative {
-		display: inline-block;
+	.set-positive {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+	}
+
+	.set-negative {
+		position: absolute;
+		bottom: 0;
+		right: 0;
 	}
 
 	.icon {
-		height: 40px;
-		width: 40px;
+		height: 46px;
+		width: 46px;
 		text-align: center;
 		display: table-cell;
 		vertical-align: middle;
 		font: 35px 'ModernPictogramsNormal', Arial, sans-serif;
 		letter-spacing: 0;
 		color: #666;
-		border-radius: 20px;
+		border-radius: 23px;
 		cursor: pointer;
 		border: 1px solid transparent;
 	}
 
 	.icon:hover {
 		color: black;
-		border: 1px solid #666;
+		background-color: #DDD;
+		border: 1px solid #CCC;
+	}
+	.count {
+		text-align: center;
+		margin-bottom: 3px;
 	}
 
 	.color-block {
 		height: 6px;
 		background-color: black;
 		border-radius: 5px;
+		margin-bottom: 5px;
 	}
 	.color-block.January { background-color: red; }
 	.color-block.February { background-color: blue; }
