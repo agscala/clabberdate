@@ -114,7 +114,7 @@ Template.calendar_comments.comments = function() {
 
 	if(calendar)
 	{
-		return _.sortBy(calendar.comments, function(comment) { return comment.time }).reverse();
+		return _.sortBy(calendar.comments, function(comment) { return moment(comment.time._d).utc() }).reverse();
 	}
 	else return [];
 };
