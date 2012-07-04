@@ -394,4 +394,14 @@ Template.header.events = {
 	"click h1": function() {
 		Router.navigate("/", {trigger: true});
 	},
+	"click #change-name": function() {
+		$("#username-form").empty();
+		$("#username-form-wrapper").fadeIn(100);
+
+		$("#username-submit").live('click', function() {
+			$("#username-form-wrapper").fadeOut(100);
+			var username = $("#username-form").val();
+			save_username(username);
+		});
+	},
 }
