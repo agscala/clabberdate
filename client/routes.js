@@ -20,20 +20,6 @@ var Router = Backbone.Router.extend({
 		Session.set("current_page", "calendar");
 		Session.set("calendar_id", calendar_id);
 
-		if(Session.get("user_id") == null) {
-			username_prompt(function(username) {
-				save_username(username, function(user_id) {
-					var calendar_id = Session.get("calendar_id");
-					if(calendar_id) {
-						store_created_calendar(calendar_id);
-
-						Calendars.update({_id: calendar_id}, {
-							$addToSet: {users: Session.get("user_id")}
-						});
-					}
-				});
-			});
-		}
 	},
 
 	index: function() {

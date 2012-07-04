@@ -17,11 +17,13 @@ var date_range = function(date_start, date_end) {
 Meteor.startup(function() {
 	Meteor.methods({
 		create_user: function(username) {
+			console.log("CREATING USER");
 			var user_id = Users.insert({name: username});
 			return user_id;
 		},
 
 		rename_user: function(user_id, username) {
+			console.log("RENAMING");
 			var user = Users.findOne({_id: user_id});
 			if(!user) {
 				user_id = Users.insert({name: username});

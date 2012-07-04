@@ -79,17 +79,18 @@ Template.calendar_header.human_time = function(date) {
 	return moment(date._d).fromNow();
 };
 
-
-Template.calendar_dates.dates = function() {
-	// isotope_dates();
-
-	var calendar = Calendars.findOne({_id: Session.get("calendar_id")});
+var get_dates = function(calendar_id) {
+	var calendar = Calendars.findOne({_id: calendar_id});
 
 	if(calendar)
 	{
 		return Dates.find({_id: {$in: calendar.dates}});
 	}
 	else return [];
+};
+
+Template.calendar_dates.dates = function() {
+	return get_dates(Session.get("calendar_id"));
 };
 
 Template.calendar_comments.username = function(user_id) {
@@ -202,18 +203,57 @@ Template.date.username = function(user_id) {
 
 Template.date.events = {
 	"click .set-positive": function() {
-		Calendars.update({_id: Session.get("calendar_id")}, {
-			$addToSet: {users: Session.get("user_id")}
-		});
+		if(Session.get("user_id") == null) {
+			username_prompt(function(username) {
+				save_username(username, function(user_id) {
+					var calendar_id = Session.get("calendar_id");
+					if(calendar_id) {
+						store_created_calendar(calendar_id);
 
-		Meteor.call("set_date_positive", this._id, Session.get("user_id"));
+						Calendars.update({_id: calendar_id}, {
+							$addToSet: {users: Session.get("user_id")}
+						});
+					}
+					Meteor.call("set_date_positive", this._id, Session.get("user_id"));
+				});
+			});
+		}
+		else {
+			var calendar_id = Session.get("calendar_id");
+			store_created_calendar(calendar_id);
+
+			Calendars.update({_id: calendar_id}, {
+				$addToSet: {users: Session.get("user_id")}
+			});
+			Meteor.call("set_date_positive", this._id, Session.get("user_id"));
+		}
 	},
 	"click .set-negative": function() {
-		Calendars.update({_id: Session.get("calendar_id")}, {
-			$addToSet: {users: Session.get("user_id")}
-		});
+		if(Session.get("user_id") == null) {
+			username_prompt(function(username) {
+				save_username(username, function(user_id) {
+					var calendar_id = Session.get("calendar_id");
+					if(calendar_id) {
+						store_created_calendar(calendar_id);
 
-		Meteor.call("set_date_negative", this._id, Session.get("user_id"));
+						Calendars.update({_id: calendar_id}, {
+							$addToSet: {users: Session.get("user_id")}
+						});
+					}
+					Meteor.call("set_date_negative", this._id, Session.get("user_id"));
+				});
+			});
+		}
+		else {
+			var calendar_id = Session.get("calendar_id");
+			store_created_calendar(calendar_id);
+
+			Calendars.update({_id: calendar_id}, {
+				$addToSet: {users: Session.get("user_id")}
+			});
+			Meteor.call("set_date_negative", this._id, Session.get("user_id"));
+		}
+
 	},
 };
 

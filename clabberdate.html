@@ -56,27 +56,29 @@
 </template>
 
 <template name="calendar_dates">
+	<!--
 	<input type="button" value="All" class="dow-filter" />
-	<input type="button" value="Sunday" class="dow-filter" />
-	<input type="button" value="Monday" class="dow-filter" />
-	<input type="button" value="Tuesday" class="dow-filter" />
-	<input type="button" value="Wednesday" class="dow-filter" />
-	<input type="button" value="Thursday" class="dow-filter" />
-	<input type="button" value="Friday" class="dow-filter" />
-	<input type="button" value="Saturday" class="dow-filter" />
+	<input type="button" value="Sunday" id="Sunday-filter" class="dow-filter" />
+	<input type="button" value="Monday" id="Monday-filter" class="dow-filter" />
+	<input type="button" value="Tuesday" id="Tuesday-filter" class="dow-filter" />
+	<input type="button" value="Wednesday" id="Wednesday-filter" class="dow-filter" />
+	<input type="button" value="Thursday" id="Thursday-filter" class="dow-filter" />
+	<input type="button" value="Friday" id="Friday-filter" class="dow-filter" />
+	<input type="button" value="Saturday" id="Saturday-filter" class="dow-filter" />
 	<br/>
-	<input type="button" value="January" class="month-filter" />
-	<input type="button" value="February" class="month-filter" />
-	<input type="button" value="March" class="month-filter" />
-	<input type="button" value="April" class="month-filter" />
-	<input type="button" value="May" class="month-filter" />
-	<input type="button" value="June" class="month-filter" />
-	<input type="button" value="July" class="month-filter" />
-	<input type="button" value="August" class="month-filter" />
-	<input type="button" value="September" class="month-filter" />
-	<input type="button" value="October" class="month-filter" />
-	<input type="button" value="November" class="month-filter" />
-	<input type="button" value="December" class="month-filter" />
+	<input type="button" value="January" id="January-filter" class="month-filter" />
+	<input type="button" value="February" id="February-filter" class="month-filter" />
+	<input type="button" value="March" id="March-filter" class="month-filter" />
+	<input type="button" value="April" id="April-filter" class="month-filter" />
+	<input type="button" value="May" id="May-filter" class="month-filter" />
+	<input type="button" value="June" id="June-filter" class="month-filter" />
+	<input type="button" value="July" id="July-filter" class="month-filter" />
+	<input type="button" value="August" id="August-filter" class="month-filter" />
+	<input type="button" value="September" id="September-filter" class="month-filter" />
+	<input type="button" value="October" id="October-filter" class="month-filter" />
+	<input type="button" value="November" id="November-filter" class="month-filter" />
+	<input type="button" value="December" id="December-filter" class="month-filter" />
+	-->
 	<div id="calendar-dates">
 	{{# each dates }}
 		{{> date }}
