@@ -99,7 +99,10 @@ Template.calendar_comments.username = function(user_id) {
 };
 
 Template.calendar_comments.comment_time = function(date) {
-	return moment(date._d).format("h:mma");
+	var timestamp = moment(date._d).format("h:mma");
+	if(timestamp.indexOf("NaN") === -1)
+		return timestamp;
+	else return "···";
 };
 
 Template.calendar_comments.comment_date = function(date) {
@@ -221,13 +224,11 @@ Template.date.year = function(date) {
 
 Template.date.is_positive_selected = function(date_id, user_id) {
 	var selected = DateResponses.find({user_id: Session.get("user_id"), date_id: date_id, state: "positive"}).count() > 0;
-	console.log(selected);
 	return selected;
 };
 
 Template.date.is_negative_selected = function(date_id, user_id) {
 	var selected = DateResponses.find({user_id: Session.get("user_id"), date_id: date_id, state: "negative"}).count() > 0;
-	console.log(selected);
 	return selected;
 };
 
