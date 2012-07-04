@@ -90,8 +90,14 @@
 <template name="date">
 	<div class="date {{ weekday date }} {{ month date }}">
 		<div class="color-block {{ month date }}"></div>
-		<div class="datestamp">
+		<div class="date-weekday">
+			{{ weekday date }}
+		</div>
+		<div class="date-day-month">
 			{{ format_date date }}
+		</div>
+		<div class="date-year">
+			{{ year date }}
 		</div>
 
 		<div class="responses">

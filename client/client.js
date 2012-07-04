@@ -181,7 +181,12 @@ Template.date.is_positive_response = function(response) {
 
 Template.date.format_date = function(date) {
 	var date = moment(date._d);
-	return date.format("MMMM Do, YYYY");
+	return date.format("MMMM Do");
+};
+
+Template.date.year = function(date) {
+	var date = moment(date._d);
+	return date.format("YYYY");
 };
 
 Template.date.is_positive_selected = function(date_id, user_id) {

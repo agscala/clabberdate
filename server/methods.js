@@ -67,7 +67,6 @@ Meteor.startup(function() {
 
 		set_date_positive: function(date_id, user_id) {
 			var date = DateResponses.findOne({date_id: date_id, user_id: user_id});
-			console.log(date);
 			if(!date) {
 				DateResponses.insert({
 					date_id: date_id,
@@ -85,7 +84,6 @@ Meteor.startup(function() {
 
 		set_date_negative: function(date_id, user_id) {
 			var date = DateResponses.findOne({date_id: date_id, user_id: user_id});
-			console.log(date);
 			if(!date) {
 				DateResponses.insert({
 					date_id: date_id,
