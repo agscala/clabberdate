@@ -220,6 +220,8 @@ Template.date.username = function(user_id) {
 
 Template.date.events = {
 	"click .set-positive": function() {
+		var date_id = this._id;
+
 		if(Session.get("user_id") == null) {
 			username_prompt(function(username) {
 				save_username(username, function(user_id) {
@@ -228,10 +230,10 @@ Template.date.events = {
 						store_created_calendar(calendar_id);
 
 						Calendars.update({_id: calendar_id}, {
-							$addToSet: {users: Session.get("user_id")}
+							$addToSet: {users: user_id}
 						});
 					}
-					Meteor.call("set_date_positive", this._id, Session.get("user_id"));
+					Meteor.call("set_date_positive", date_id, user_id);
 				});
 			});
 		}
@@ -242,10 +244,12 @@ Template.date.events = {
 			Calendars.update({_id: calendar_id}, {
 				$addToSet: {users: Session.get("user_id")}
 			});
-			Meteor.call("set_date_positive", this._id, Session.get("user_id"));
+			Meteor.call("set_date_positive", date_id, Session.get("user_id"));
 		}
 	},
 	"click .set-negative": function() {
+		var date_id = this._id;
+
 		if(Session.get("user_id") == null) {
 			username_prompt(function(username) {
 				save_username(username, function(user_id) {
@@ -257,7 +261,7 @@ Template.date.events = {
 							$addToSet: {users: Session.get("user_id")}
 						});
 					}
-					Meteor.call("set_date_negative", this._id, Session.get("user_id"));
+					Meteor.call("set_date_negative", date_id, Session.get("user_id"));
 				});
 			});
 		}
@@ -268,7 +272,7 @@ Template.date.events = {
 			Calendars.update({_id: calendar_id}, {
 				$addToSet: {users: Session.get("user_id")}
 			});
-			Meteor.call("set_date_negative", this._id, Session.get("user_id"));
+			Meteor.call("set_date_negative", date_id, Session.get("user_id"));
 		}
 
 	},
