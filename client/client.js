@@ -132,20 +132,50 @@ Template.calendar_contributors.username = function(user_id) {
 };
 
 var submitComment = function() {
-	Calendars.update({_id: Session.get("calendar_id")}, {
-		$addToSet: {users: Session.get("user_id")}
-	});
+	if(Session.get("user_id") == null) {
+		username_prompt(function(username) {
+			save_username(username, function(user_id) {
+				var calendar_id = Session.get("calendar_id");
+				if(calendar_id) {
+					store_created_calendar(calendar_id);
 
-	var comment = $("#calendar-comment-input").val();
-	$("#calendar-comment-input").val("");
-	$("#calendar-comment-input").focus();
-	Calendars.update({_id: Session.get("calendar_id")}, {
-		$push: {comments: {
-			user_id: Session.get("user_id"),
-			text: comment,
-			time: moment(),
-		}}
-	});
+					Calendars.update({_id: calendar_id}, {
+						$addToSet: {users: user_id}
+					});
+
+					var comment = $("#calendar-comment-input").val();
+					$("#calendar-comment-input").val("");
+					$("#calendar-comment-input").focus();
+					Calendars.update({_id: Session.get("calendar_id")}, {
+						$push: {comments: {
+							user_id: Session.get("user_id"),
+							text: comment,
+							time: moment(),
+						}}
+					});
+				}
+			});
+		});
+	}
+	else {
+		var calendar_id = Session.get("calendar_id");
+		store_created_calendar(calendar_id);
+
+		Calendars.update({_id: calendar_id}, {
+			$addToSet: {users: Session.get("user_id")}
+		});
+
+		var comment = $("#calendar-comment-input").val();
+		$("#calendar-comment-input").val("");
+		$("#calendar-comment-input").focus();
+		Calendars.update({_id: Session.get("calendar_id")}, {
+			$push: {comments: {
+				user_id: Session.get("user_id"),
+				text: comment,
+				time: moment(),
+			}}
+		});
+	}
 };
 
 Template.calendar_comments.events = {
