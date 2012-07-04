@@ -100,7 +100,11 @@
 		{{/ each }}
 		</div>
 
+		{{# if is_positive_selected _id user_id }}
+		<div class="set-positive selected">
+		{{ else }}
 		<div class="set-positive">
+		{{/ if }}
 			<div class="icon">
 				l
 			</div>
@@ -108,7 +112,11 @@
 				{{ positive_count _id }}
 			</div>
 		</div>
+		{{# if is_negative_selected _id user_id }}
+		<div class="set-negative selected">
+		{{ else }}
 		<div class="set-negative">
+		{{/ if }}
 			<div class="icon">
 				L
 			</div>
