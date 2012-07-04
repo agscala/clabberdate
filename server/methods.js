@@ -66,12 +66,17 @@ Meteor.startup(function() {
 		},
 
 		set_date_positive: function(date_id, user_id) {
-			if(DateResponses.find({date_id: date_id, user_id: user_id}).count() == 0) {
+			var date = DateResponses.findOne({date_id: date_id, user_id: user_id});
+			console.log(date);
+			if(!date) {
 				DateResponses.insert({
 					date_id: date_id,
 					user_id: user_id,
 					state: "positive",
 				});
+			}
+			else if(date.state === "positive") {
+				DateResponses.remove({date_id: date_id, user_id: user_id});
 			}
 			else {
 				DateResponses.update({date_id: date_id, user_id: user_id}, {$set: {state: "positive"}});
@@ -79,12 +84,17 @@ Meteor.startup(function() {
 		},
 
 		set_date_negative: function(date_id, user_id) {
-			if(DateResponses.find({date_id: date_id, user_id: user_id}).count() == 0) {
+			var date = DateResponses.findOne({date_id: date_id, user_id: user_id});
+			console.log(date);
+			if(!date) {
 				DateResponses.insert({
 					date_id: date_id,
 					user_id: user_id,
 					state: "negative",
 				});
+			}
+			else if(date.state === "negative") {
+				DateResponses.remove({date_id: date_id, user_id: user_id});
 			}
 			else {
 				DateResponses.update({date_id: date_id, user_id: user_id}, {$set: {state: "negative"}});

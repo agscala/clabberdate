@@ -37,7 +37,7 @@
 .date {
 	float: left;
 	width: 80px;
-	height: 100px;
+	height: 120px;
 	background-color: #FAFAFA;
 	margin: 5px;
 	border: 2px solid #FAFAFA;
@@ -51,29 +51,60 @@
 		margin-bottom: 10px;
 	}
 
+	.set-positive,
+	.set-negative {
+		cursor: pointer;
+	}
+
 	.set-positive {
 		position: absolute;
-		bottom: 0;
-		left: 0;
+		bottom: 2px;
+		left: 2px;
 	}
 
 	.set-positive.selected {
 		background-color: green;
+		border: 2px solid green;
+
+		.icon {
+			color: white;
+		}
 	}
 
 	.set-negative {
 		position: absolute;
-		bottom: 0;
-		right: 0;
+		bottom: 2px;
+		right: 2px;
 	}
 
 	.set-negative.selected {
 		background-color: red;
+		border: 2px solid red;
+
+		.icon {
+			color: white;
+		}
+	}
+
+	.set-negative:hover,
+	.set-positive:hover {
+		background-color: #CCC;
+
+		.icon {
+			color: black;
+		}
+	}
+
+	.set-positive,
+	.set-negative {
+		border-radius: 5px;
+		border: 2px solid white;
+		box-shadow: 1px 1px 4px #444;
 	}
 
 	.icon {
-		height: 46px;
-		width: 46px;
+		height: 32px;
+		width: 32px;
 		text-align: center;
 		display: table-cell;
 		vertical-align: middle;
@@ -81,18 +112,24 @@
 		letter-spacing: 0;
 		color: #999;
 		border-radius: 23px;
-		cursor: pointer;
 		border: 1px solid transparent;
 	}
 
 	.icon:hover {
 		color: black;
 		/* background-color: #DDD; */
-		border: 1px solid #CCC;
+		/* border: 1px solid #CCC; */
 	}
 	.count {
+		background-color: white;
+		display: block;
+		width: 23px;
+		border-radius: 10px;
 		text-align: center;
-		margin-bottom: 3px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 5px;
+		box-shadow:inset 0 1px 4px #333;
 	}
 
 	.color-block {
