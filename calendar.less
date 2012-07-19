@@ -34,10 +34,11 @@
 }
 
 .date .front {
+	display: block;
 	float: none;
 	position: absolute;
-	top: 5;
-	left: 5;
+	top: 0;
+	left: 0;
 	z-index: 900;
 	width: inherit;
 	height: inherit;
@@ -66,10 +67,11 @@
 }
 
 .date .back {
+	display: block;
 	float: none;
 	position: absolute;
-	top: 5;
-	left: 5;
+	top: 0;
+	left: 0;
 	background-color: #FAFAFA;
 	z-index: 800;
 	width: inherit;
@@ -78,7 +80,7 @@
 	box-shadow: 1px 1px 7px #666;
 	-webkit-transform: rotateY(-180deg);
 	-webkit-transform-style: preserve-3d;
-	-webkitit-backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
 
 	-moz-transform: rotateY(-180deg);
 	-moz-transform-style: preserve-3d;
@@ -107,7 +109,7 @@
 	width: 100px;
 	height: 155px;
 	background-color: #FAFAFA;
-	margin: 5px 20px 5px 0px;
+	margin: 10px 20px 10px 0px;
 	position: relative;
 
 	.back,
@@ -248,11 +250,10 @@
 	.color-block.December { background-color: maroon; }
 
 	.responses {
-		position: absolute;
 		top: 5px;
 		left: 5px;
 		height: 130px;
-		overflow: scroll;
+		overflow-y: scroll;
 
 		.positive-response {
 			color: green;
