@@ -33,17 +33,90 @@
 #calendar-dates {
 }
 
+.date .front {
+	float: none;
+	position: absolute;
+	top: 5;
+	left: 5;
+	z-index: 900;
+	width: inherit;
+	height: inherit;
+	background-color: #FAFAFA;
+
+	-webkit-transform: rotateX(0deg) rotateY(0deg);
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+
+	-moz-transform: rotateX(0deg) rotateY(0deg);
+	-moz-transform-style: preserve-3d;
+	-moz-backface-visibility: hidden;
+
+	/* -- transition is the magic sauce for animation -- */
+	-o-transition: all .4s ease-in-out;
+	-ms-transition: all .4s ease-in-opacityut;
+	-moz-transition: all .4s ease-in-out;
+	-webkit-transition: All .4s ease-in-out;
+	transition: all .4s ease-in-out;
+}
+
+.date.flip .front {
+	z-index: 900;
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateXY(180deg);
+}
+
+.date .back {
+	float: none;
+	position: absolute;
+	top: 5;
+	left: 5;
+	background-color: #FAFAFA;
+	z-index: 800;
+	width: inherit;
+	height: inherit;
+
+	box-shadow: 1px 1px 7px #666;
+	-webkit-transform: rotateY(-180deg);
+	-webkit-transform-style: preserve-3d;
+	-webkitit-backface-visibility: hidden;
+
+	-moz-transform: rotateY(-180deg);
+	-moz-transform-style: preserve-3d;
+	-moz-backface-visibility: hidden;
+
+	/* -- transition is the magic sauce for animation -- */
+	-o-transition: all .4s ease-in-out;
+	-ms-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
+}
+
+.date.flip .back {
+	z-index: 1000;
+	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+}
+
 .date {
+	background-color: #FAFAFA;
+	-webkit-perspective: 600px;
+	-moz-perspective: 600px;
+
 	float: left;
 	width: 100px;
-	height: 130px;
+	height: 155px;
 	background-color: #FAFAFA;
-	margin: 5px 10px 5px 0px;
-	border: 2px solid #FAFAFA;
-	border-radius: 5px;
-	box-shadow: 1px 1px 7px #666;
-	padding: 3px;
+	margin: 5px 20px 5px 0px;
 	position: relative;
+
+	.back,
+	.front {
+		border: 2px solid #FAFAFA;
+		border-radius: 5px;
+		box-shadow: 1px 1px 7px #666;
+		padding: 3px;
+	}
 
 	.date-year,
 	.date-weekday {
@@ -64,7 +137,7 @@
 	.set-positive {
 		text-align: left;
 		position: absolute;
-		bottom: 2px;
+		bottom: 26px;
 		left: 2px;
 	}
 
@@ -80,8 +153,18 @@
 	.set-negative {
 		position: absolute;
 		text-align: right;
-		bottom: 2px;
+		bottom: 26px;
 		right: 2px;
+	}
+
+	.back-to-voting,
+	.see-voters {
+		position: absolute;
+		bottom: 2px;
+		height: 20px;
+		width: 100px;
+		background-color: #EEE;
+		cursor: pointer;
 	}
 
 	.set-negative.selected {
@@ -93,6 +176,10 @@
 		}
 	}
 
+	.back-to-voting:hover,
+	.see-voters:hover {
+	}
+
 	.set-negative:hover,
 	.set-positive:hover {
 		background-color: #CCC;
@@ -102,6 +189,8 @@
 		}
 	}
 
+	.back-to-voting,
+	.see-voters,
 	.set-positive,
 	.set-negative {
 		border-radius: 5px;
@@ -109,7 +198,7 @@
 		box-shadow: 1px 1px 4px #444;
 	}
 
-	.icon {
+	.front .icon {
 		text-align: center;
 		vertical-align: middle;
 		margin: 0px auto;
@@ -120,7 +209,7 @@
 		border: 1px solid transparent;
 	}
 
-	.icon:hover {
+	.front .icon:hover {
 		color: black;
 		/* background-color: #DDD; */
 		/* border: 1px solid #CCC; */
@@ -159,7 +248,21 @@
 	.color-block.December { background-color: maroon; }
 
 	.responses {
-		display: none;
+		position: absolute;
+		top: 5px;
+		left: 5px;
+		height: 130px;
+		overflow: scroll;
+
+		.positive-response {
+			color: green;
+		}
+		.negative-response {
+			color: darken(red, 10%);
+		}
+		.icon {
+			font: 18px 'ModernPictogramsNormal', Arial, sans-serif;
+		}
 	}
 }
 

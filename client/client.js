@@ -240,8 +240,16 @@ Template.date.negative_count = function(date_id) {
 	return DateResponses.find({date_id: date_id, state: "negative"}).count();
 };
 
-Template.date.responses = function(date_id) {
-	return DateResponses.find({date_id: date_id});
+Template.date.has_responses = function(date_id) {
+	return (DateResponses.find({date_id: date_id}).count() > 0);
+};
+
+Template.date.negative_responses = function(date_id) {
+	return DateResponses.find({date_id: date_id, state: "negative"});
+};
+
+Template.date.positive_responses = function(date_id) {
+	return DateResponses.find({date_id: date_id, state: "positive"});
 };
 
 Template.date.username = function(user_id) {
@@ -306,6 +314,14 @@ Template.date.events = {
 			Meteor.call("set_date_negative", date_id, Session.get("user_id"));
 		}
 
+	},
+	"click .see-voters": function(event) {
+		console.log(event.currentTarget);
+		$(event.currentTarget).parents(".date").addClass("flip");
+	},
+	"click .back-to-voting": function(event) {
+		console.log(event.currentTarget);
+		$(event.currentTarget).parents(".date").removeClass("flip");
 	},
 };
 

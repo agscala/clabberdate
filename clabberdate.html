@@ -89,46 +89,64 @@
 
 <template name="date">
 	<div class="date {{ weekday date }} {{ month date }}">
-		<div class="color-block {{ month date }}"></div>
-		<div class="date-weekday">
-			{{ weekday date }}
-		</div>
-		<div class="date-day-month">
-			{{ format_date date }}
-		</div>
-		<div class="date-year">
-			{{ year date }}
-		</div>
+		<div class="front">
+			<div class="color-block {{ month date }}"></div>
+			<div class="date-weekday">
+				{{ weekday date }}
+			</div>
+			<div class="date-day-month">
+				{{ format_date date }}
+			</div>
+			<div class="date-year">
+				{{ year date }}
+			</div>
 
-		<div class="responses">
-		{{# each responses _id }}
-			{{ username user_id }}
-		{{/ each }}
+			{{# if is_positive_selected _id user_id }}
+			<div class="set-positive selected">
+			{{ else }}
+			<div class="set-positive">
+			{{/ if }}
+				<div class="icon">
+					l
+				</div>
+				<div class="count">
+					{{ positive_count _id }}
+				</div>
+			</div>
+			{{# if is_negative_selected _id user_id }}
+			<div class="set-negative selected">
+			{{ else }}
+			<div class="set-negative">
+			{{/ if }}
+				<div class="icon">
+					L
+				</div>
+				<div class="count">
+					{{ negative_count _id }}
+				</div>
+			</div>
+			{{# if has_responses _id }}
+			<input type="button" class="see-voters" value="who voted?" />
+			{{/ if }}
 		</div>
+		<div class="back">
+			<div class="responses">
+			{{# each positive_responses _id }}
+				<div class="positive-response">
+					<span class="icon">l</span>
+					{{ username user_id }}
+				</div>
+			{{/ each }}
 
-		{{# if is_positive_selected _id user_id }}
-		<div class="set-positive selected">
-		{{ else }}
-		<div class="set-positive">
-		{{/ if }}
-			<div class="icon">
-				l
+			{{# each negative_responses _id }}
+				<div class="negative-response">
+					<span class="icon">L</span>
+					{{ username user_id }}
+				</div>
+			{{/ each }}
 			</div>
-			<div class="count">
-				{{ positive_count _id }}
-			</div>
-		</div>
-		{{# if is_negative_selected _id user_id }}
-		<div class="set-negative selected">
-		{{ else }}
-		<div class="set-negative">
-		{{/ if }}
-			<div class="icon">
-				L
-			</div>
-			<div class="count">
-				{{ negative_count _id }}
-			</div>
+
+			<input type="button" class="back-to-voting" value="back to voting" />
 		</div>
 	</div>
 </template>
